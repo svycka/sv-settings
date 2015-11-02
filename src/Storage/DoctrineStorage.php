@@ -33,7 +33,7 @@ class DoctrineStorage implements StorageAdapterInterface
     {
         $options    = $collection->getOptions();
         $repository = $this->entityManager->getRepository($options->getObjectClass());
-return null;
+
         return $repository->findOneBy([
             'collection' => $options->getName(),
             'name'       => $name,
@@ -77,7 +77,7 @@ return null;
     {
         $options    = $collection->getOptions();
         $repository = $this->entityManager->getRepository($options->getObjectClass());
-return [];
+
         return $repository->findBy([
             'collection' => $options->getName(),
             'identifier' => $identifier
