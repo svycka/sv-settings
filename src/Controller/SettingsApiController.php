@@ -135,6 +135,7 @@ final class SettingsApiController extends AbstractRestfulController
 
         try {
             $settings->setValue($name, $data);
+            return new JsonModel([$name => $data]);
         } catch (SettingDoesNotExistException $exception) {
             return new ApiProblemResponse(new ApiProblem(404, $exception->getMessage()));
         }
