@@ -49,7 +49,7 @@ final class SettingsApiController extends AbstractRestfulController
             return $this->collectionNotFoundResponse();
         }
 
-        return JsonModel($settings->getList());
+        return new JsonModel($settings->getList());
     }
 
     /**
@@ -69,7 +69,7 @@ final class SettingsApiController extends AbstractRestfulController
 
         try {
             $value = $settings->getValue($name);
-            return JsonModel([$name => $value]);
+            return new JsonModel([$name => $value]);
         } catch (SettingDoesNotExistException $exception) {
             return new ApiProblemResponse(new ApiProblem(404, $exception->getMessage()));
         }
@@ -110,7 +110,7 @@ final class SettingsApiController extends AbstractRestfulController
             $settings->setValue($key, $value);
         }
 
-        return JsonModel($data);
+        return new JsonModel($data);
     }
 
     /**
