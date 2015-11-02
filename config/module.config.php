@@ -5,7 +5,7 @@ namespace Svycka\Settings;
 return [
     'controllers' => [
         'factories' => [
-            Controller\SettingsController::class => Controller\Factory\SettingsControllerFactory::class,
+            Controller\SettingsApiController::class => Controller\Factory\SettingsApiControllerFactory::class,
         ]
     ],
 
