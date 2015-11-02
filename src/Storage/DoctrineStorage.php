@@ -58,7 +58,7 @@ class DoctrineStorage implements StorageAdapterInterface
             $setting = new $objectClassName;
             $setting->setName($name);
             $setting->setIdentifier($identifier);
-            $setting->setCollection($name);
+            $setting->setCollection($options->getName());
         }
 
         $setting->setValue($value);
