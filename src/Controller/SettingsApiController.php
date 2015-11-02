@@ -6,6 +6,7 @@ use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Stdlib\ArrayUtils;
+use Zend\View\Model\JsonModel;
 use ZF\ApiProblem\ApiProblem;
 use ZF\ApiProblem\ApiProblemResponse;
 
@@ -48,7 +49,7 @@ final class SettingsApiController extends AbstractRestfulController
             return $this->collectionNotFoundResponse();
         }
 
-        return $settings->getList();
+        return JsonModel($settings->getList());
     }
 
     /**
@@ -68,7 +69,7 @@ final class SettingsApiController extends AbstractRestfulController
 
         try {
             $value = $settings->getValue($name);
-            return [$name => $value];
+            return JsonModel([$name => $value]);
         } catch (SettingDoesNotExistException $exception) {
             return new ApiProblemResponse(new ApiProblem(404, $exception->getMessage()));
         }
@@ -109,7 +110,7 @@ final class SettingsApiController extends AbstractRestfulController
             $settings->setValue($key, $value);
         }
 
-        return $data;
+        return JsonModel($data);
     }
 
     /**
