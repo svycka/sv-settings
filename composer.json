@@ -1,0 +1,50 @@
+{
+    "name": "svycka/sv-settings",
+    "description": "This module simplifies settings storage. For example this can be used with ZfcUser or store your application global settings with could be changed any time.",
+    "keywords": [
+        "settings",
+        "options",
+        "sv-settings",
+        "zendframework",
+        "doctrine",
+        "zf2",
+        "module"
+    ],
+    "homepage": "https://github.com/svycka/sv-settings",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vytautas Stankus",
+            "email": "svycka@gmail.com",
+            "homepage": "https://github.com/svycka"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "zendframework/zend-modulemanager": "~2.5",
+        "zendframework/zend-servicemanager": "~2.5",
+        "zendframework/zend-stdlib": "~2.5"
+    },
+    "require-dev": {
+        "zendframework/zend-mvc": "~2.5",
+        "phpunit/phpunit": "4.*"
+    },
+    "suggest": {
+        "zendframework/zend-mvc": "Required, if you will use SettingsApiController"
+    },
+    "autoload": {
+        "psr-4": {
+            "Svycka\\Settings\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Svycka\\SettingsTest\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,0 +1,100 @@
+<?php
+
+return [
+    // If you use doctrine, you can use build-in entity or create your own
+    /**
+    'doctrine' => [
+        'driver' => [
+            'sv_settings_entities' => [
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => [__DIR__.'/../../vendor/svycka/sv-settings/src/Entity'],
+            ],
+
+            'orm_default' => [
+                'drivers' => [
+                    'Svycka\Settings\Entity' => 'sv_settings_entities',
+                ],
+            ],
+        ],
+    ],
+    //*/
+
+    'sv-settings' => [
+        // this is service manager for settings collections, add your own if you want
+        /**
+        'settings_manager' => [
+            'factories' => [
+                // returned object should implement \Svycka\Settings\Collection\CollectionInterface
+                'my_collection' => \Application\Factory\MyCollectionFactory::class
+            ]
+        ],
+        //*/
+
+        // TypesManager configuration here you can add custom types, if you need custom Setting type
+        /**
+        'types' => [
+            'factories' => [
+                // returned object should implement \Svycka\Settings\Type\SettingTypeInterface
+                'custom_type' => \Application\Factory\CustomSettingTypeFactory::class,
+            ],
+        ],
+        //*/
+
+        // here you configure collections and settings
+        'collections' => [
+            // key is collection name
+            'zfcuser_settings' => [
+                'storage_adapter' => \Svycka\Settings\Storage\DoctrineStorage::class,
+                'owner_provider' => \Svycka\Settings\Provider\ZfcUserProvider::class,
+                // Available settings goes here
+                'settings' => [
+                    'newsletter' => [
+                        'default_value' => false,
+                        'type' => 'boolean',
+                    ],
+                    'show_profile_image' => [
+                        'default_value' => true,
+                        'type' => 'boolean',
+                    ],
+                ],
+            ],
+            'global_settings' => [
+                'storage_adapter' => \Svycka\Settings\Storage\DoctrineStorage::class,
+                'owner_provider' => \Svycka\Settings\Provider\NullProvider::class,
+                'settings' => [
+                    'country_code' => [
+                        'default_value' => 'EN',
+                        'type' => 'string',
+                    ],
+
+                    'items_per_page' => [
+                        'default_value' => '30',
+                        'type' => 'integer',
+                    ]
+                ],
+            ]
+        ],
+    ],
+
+    // Optional simple build-in settings rest api, but you can create your own
+    /**
+    'router' => [
+        'routes' => [
+            'settings-api' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/settings/:collection[/:name]',
+                    'constraints' => [
+                        'collection' => '[a-z_\-]+',
+                        'name' => '[a-z_\-]+',
+                    ],
+                    'defaults' => [
+                        'controller' => \Svycka\Settings\Controller\SettingsApiController::class,
+                    ],
+                ],
+            ],
+        ]
+    ],
+    //*/
+];
