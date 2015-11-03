@@ -23,7 +23,8 @@
         "php": ">=5.5",
         "zendframework/zend-modulemanager": "~2.5",
         "zendframework/zend-servicemanager": "~2.5",
-        "zendframework/zend-stdlib": "~2.5"
+        "zendframework/zend-stdlib": "~2.5",
+        "zendframework/zend-validator": "~2.5"
     },
     "require-dev": {
         "zendframework/zend-mvc": "~2.5",
