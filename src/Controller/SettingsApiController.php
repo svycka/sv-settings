@@ -195,7 +195,7 @@ final class SettingsApiController extends AbstractRestfulController
         parse_str($content, $parsedParams);
 
         // If parse_str fails to decode, or we have a single element with empty value
-        if (!is_array($parsedParams)
+        if (!is_array($parsedParams) || empty($parsedParams)
             || (1 == count($parsedParams) && '' === reset($parsedParams))
         ) {
             return $content;
