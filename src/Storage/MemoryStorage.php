@@ -1,12 +1,15 @@
 <?php
 
-namespace Svycka\SettingsTest\TestAssets;
+namespace Svycka\Settings\Storage;
 
 use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Entity\SettingInterface;
-use Svycka\Settings\Storage\StorageAdapterInterface;
 
-class MemoryStorage implements StorageAdapterInterface
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
+final class MemoryStorage implements StorageAdapterInterface
 {
     protected $storage = [];
 
@@ -44,14 +47,18 @@ class MemoryStorage implements StorageAdapterInterface
      */
     public function getList(CollectionInterface $collection, $identifier)
     {
-
         $options = $collection->getOptions();
-        $storedSettings = $this->storage[$options->getName()];
         $objectClass = $options->getObjectClass();
+        $storedSettings = [];
+
+        if (isset($this->storage[$options->getName()])) {
+            $storedSettings = $this->storage[$options->getName()];
+        }
+
         $settings = [];
 
         foreach ($storedSettings as $owner => $item) {
-            if ($owner !== $identifier) {
+            if ($owner != $identifier) {
                 continue;
             }
 
