@@ -27,11 +27,17 @@
         "zendframework/zend-validator": "~2.5"
     },
     "require-dev": {
+        "doctrine/doctrine-orm-module": "0.*",
         "zendframework/zend-mvc": "~2.5",
+        "zendframework/zend-view": "~2.5",
+        "zfcampus/zf-api-problem": "~1.1",
         "phpunit/phpunit": "4.*"
     },
     "suggest": {
-        "zendframework/zend-mvc": "Required, if you will use SettingsApiController"
+        "zendframework/zend-mvc": "Required, if you will use SettingsApiController",
+        "zendframework/zend-view": "Required, if you will use SettingsApiController",
+        "zfcampus/zf-api-problem": "Required, if you will use SettingsApiController",
+        "doctrine/doctrine-orm-module": "Required, if you will use Doctrine for settings storage"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +46,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Svycka\\SettingsTest\\": "tests"
+            "Svycka\\SettingsTest\\": "tests/Settings",
+            "TestAssets\\": "tests/TestAssets"
         }
     },
     "extra": {
