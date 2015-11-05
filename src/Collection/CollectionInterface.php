@@ -2,6 +2,9 @@
 
 namespace Svycka\Settings\Collection;
 
+use Svycka\Settings\Exception\RuntimeException;
+use Svycka\Settings\Exception\SettingDoesNotExistException;
+
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
@@ -13,6 +16,8 @@ interface CollectionInterface
      *
      * @param string $name
      * @param mixed $value
+     *
+     * @throws SettingDoesNotExistException
      */
     public function setValue($name, $value);
 
@@ -22,6 +27,8 @@ interface CollectionInterface
      * @param string $name
      *
      * @return mixed
+     * @throws SettingDoesNotExistException
+     * @throws RuntimeException
      */
     public function getValue($name);
 

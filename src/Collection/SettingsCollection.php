@@ -59,6 +59,16 @@ class SettingsCollection implements CollectionInterface
      */
     public function setValue($name, $value)
     {
+        $settings = $this->options->getSettings();
+
+        if (!array_key_exists($name, $settings)) {
+            throw new SettingDoesNotExistException(sprintf(
+                "Collection '%s' doesn't have '%s' setting.",
+                $this->options->getName(),
+                $name
+            ));
+        }
+
         $this->adapter->set($this, $this->ownerProvider->getIdentifier(), $name, $value);
     }
 
@@ -91,13 +101,14 @@ class SettingsCollection implements CollectionInterface
         $settings = [];
         $storedSettings = $this->adapter->getList($this, $this->ownerProvider->getIdentifier());
 
+        /** @var SettingInterface $setting */
         foreach ($storedSettings as $setting) {
             $settings[$setting->getName()] = $setting->getValue();
         }
 
         $notSet = array_diff_key($this->options->getSettings(), $settings);
 
-        foreach ($notSet as $name =>$setting) {
+        foreach ($notSet as $name => $setting) {
             if (isset($setting['default_value'])) {
                 $settings[$name] = $setting['default_value'];
             } else {
