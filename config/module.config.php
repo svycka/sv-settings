@@ -29,17 +29,5 @@ return [
                 Collection\Factory\SettingsCollectionAbstractFactory::class,
             ],
         ],
-        'types' => [
-            'invokables' => [
-                Type\InArrayType::class => Type\InArrayType::class,
-                Type\RegexType::class   => Type\RegexType::class,
-                Type\IntegerType::class => Type\IntegerType::class,
-            ],
-            'aliases'    => [
-                'in_array' => Type\InArrayType::class,
-                'regex'    => Type\RegexType::class,
-                'integer'  => Type\IntegerType::class,
-            ],
-        ],
     ],
 ];

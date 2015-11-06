@@ -37,4 +37,26 @@ class CollectionsManager extends AbstractPluginManager
             CollectionInterface::class
         ));
     }
+
+    /**
+     * Override setInvokableClass().
+     *
+     * Performs normal operation, but also auto-aliases the class name to the
+     * service name. This ensures that providing the FQCN does not trigger an
+     * abstract factory later.
+     *
+     * @param  string       $name
+     * @param  string       $invokableClass
+     * @param  null|bool    $shared
+     * @return CollectionsManager
+     */
+    public function setInvokableClass($name, $invokableClass, $shared = null)
+    {
+        parent::setInvokableClass($name, $invokableClass, $shared);
+        if ($name != $invokableClass) {
+            $this->setAlias($invokableClass, $name);
+        }
+
+        return $this;
+    }
 }
