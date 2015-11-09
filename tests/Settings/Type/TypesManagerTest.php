@@ -10,6 +10,10 @@ use TestAssets\CustomSettingType;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\Exception\RuntimeException;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class TypesManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasDefaultTypes()

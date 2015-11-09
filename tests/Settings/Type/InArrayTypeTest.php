@@ -1,8 +1,13 @@
 <?php
+
 namespace Svycka\SettingsTest\Type;
 
 use Svycka\Settings\Type\InArrayType;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class InArrayTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanValidate()

@@ -1,8 +1,13 @@
 <?php
+
 namespace Svycka\SettingsTest\Type;
 
 use Svycka\Settings\Type\RegexType;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class RegexTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanValidate()
