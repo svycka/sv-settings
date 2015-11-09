@@ -6,6 +6,10 @@ use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Storage\MemoryStorage;
 use TestAssets\CustomCollection;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class MemoryStorageTest extends \PHPUnit_Framework_TestCase
 {
     /** @var CollectionInterface */

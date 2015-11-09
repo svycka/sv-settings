@@ -11,6 +11,10 @@ use Svycka\Settings\Entity\SettingInterface;
 use Svycka\Settings\Storage\DoctrineStorage;
 use TestAssets\CustomCollection;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
 {
     /** @var CollectionInterface */
