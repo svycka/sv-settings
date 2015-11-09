@@ -2,7 +2,10 @@
 
 namespace Svycka\Settings\Collection;
 
+use Svycka\Settings\Collection\Factory\SettingsCollectionAbstractFactory;
 use Zend\ServiceManager\AbstractPluginManager;
+use Zend\ServiceManager\ConfigInterface;
+use Zend\ServiceManager\Exception\RuntimeException;
 
 /**
  * Class CollectionsManager
@@ -17,6 +20,18 @@ use Zend\ServiceManager\AbstractPluginManager;
 class CollectionsManager extends AbstractPluginManager
 {
     /**
+     * CollectionsManager constructor.
+     *
+     * @param ConfigInterface|null $configuration
+     */
+    public function __construct(ConfigInterface $configuration = null)
+    {
+        parent::__construct($configuration);
+
+        $this->addAbstractFactory(SettingsCollectionAbstractFactory::class);
+    }
+
+    /**
      * Validate the plugin
      *
      * Checks that the collection loaded is instance of CollectionInterface.
@@ -24,14 +39,14 @@ class CollectionsManager extends AbstractPluginManager
      * @param  CollectionInterface $collection
      *
      * @return void
-     * @throws \RuntimeException if invalid
+     * @throws RuntimeException if invalid
      */
     public function validatePlugin($collection)
     {
         if ($collection instanceof CollectionInterface) {
             return; // we're okay
         }
-        throw new \RuntimeException(sprintf(
+        throw new RuntimeException(sprintf(
             'Settings collection of type %s is invalid; must implement %s',
             (is_object($collection) ? get_class($collection) : gettype($collection)),
             CollectionInterface::class

@@ -22,12 +22,4 @@ return [
             Provider\NullProvider::class => Provider\NullProvider::class,
         ]
     ],
-
-    'sv-settings' => [
-        'settings_manager' => [
-            'abstract_factories' => [
-                Collection\Factory\SettingsCollectionAbstractFactory::class,
-            ],
-        ],
-    ],
 ];

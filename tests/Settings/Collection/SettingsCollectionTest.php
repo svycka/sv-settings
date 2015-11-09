@@ -13,6 +13,10 @@ use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\UserCollectionOptions;
 
+/**
+ * @author Vytautas Stankus <svycka@gmail.com>
+ * @license MIT
+ */
 class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
