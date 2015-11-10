@@ -59,15 +59,8 @@ class SettingsCollection implements CollectionInterface
      */
     public function setValue($name, $value)
     {
-        $settings = $this->options->getSettings();
-
-        if (!array_key_exists($name, $settings)) {
-            throw new SettingDoesNotExistException(sprintf(
-                "Collection '%s' doesn't have '%s' setting.",
-                $this->options->getName(),
-                $name
-            ));
-        }
+        // check if setting is configured
+        $this->getSettingOptions($name);
 
         $this->adapter->set($this, $this->ownerProvider->getIdentifier(), $name, $value);
     }
@@ -127,7 +120,7 @@ class SettingsCollection implements CollectionInterface
         $setting = $this->getSettingOptions($name);
 
         if (!isset($setting['type'])) {
-            throw new RuntimeException('SettingType is not defined.');
+            throw new RuntimeException('Missing "type" option in setting configuration');
         }
 
         if (!$this->typesManager->has($setting['type'])) {

@@ -4,6 +4,7 @@ namespace Svycka\SettingsTest\Collection;
 
 use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Collection\SettingsCollection;
+use Svycka\Settings\Exception\RuntimeException;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
 use Svycka\Settings\Options\CollectionOptionsInterface;
 use Svycka\Settings\Provider\NullProvider;
@@ -115,5 +116,43 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->collection->isValid('distance_unit', 'm'));
         $this->assertFalse($this->collection->isValid('distance_unit', 'invalid'));
+    }
+
+    public function testShouldThrowExceptionIfSettingTypeIsNotConfigured()
+    {
+        $this->collection->getOptions()->setSettings([
+            'setting_without_type' => [],
+        ]);
+
+        $this->setExpectedException(RuntimeException::class, 'Missing "type" option in setting configuration');
+        $this->collection->isValid('setting_without_type', 'value');
+    }
+
+    public function testShouldThrowExceptionIfSettingTypeDoesNotExist()
+    {
+        $this->collection->getOptions()->setSettings([
+            'setting_with_non_existing_type' => [
+                'type' => 'not_exist',
+            ],
+        ]);
+
+        $this->setExpectedException(RuntimeException::class, "SettingType 'not_exist' does not exist");
+        $this->collection->isValid('setting_with_non_existing_type', 'value');
+    }
+
+    public function testShouldThrowExceptionIfSettingConfigInvalid()
+    {
+        $this->collection->getOptions()->setSettings([
+            'invalid_setting_config' => '',
+        ]);
+
+        $this->setExpectedException(
+            RuntimeException::class,
+            sprintf(
+                "Failed to read 'invalid_setting_config' setting configuration in '%s' collection.",
+                $this->collection->getOptions()->getName()
+            )
+        );
+        $this->collection->isValid('invalid_setting_config', 'value');
     }
 }
