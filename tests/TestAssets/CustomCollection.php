@@ -36,12 +36,21 @@ class CustomCollection implements CollectionInterface
 
     public function getValue($name)
     {
-        return $this->storage->get($this, $this->ownerProvider->getIdentifier(), $name);
+        $setting = $this->storage->get($this, $this->ownerProvider->getIdentifier(), $name);
+        if ($setting) {
+            return $setting->getValue();
+        }
+        $options = $this->getOptions()->getSettings()[$name];
+        if (isset($options['default_value'])) {
+            return $options['default_value'];
+        }
+
+        return null;
     }
 
     public function isValid($name, $value)
     {
-        $setting = $this->options->getSettings()['name'];
+        $setting = $this->options->getSettings()[$name];
         $type = $this->typesManager->get($setting['type']);
 
         if (!empty($setting['options']) && is_array($setting)) {
