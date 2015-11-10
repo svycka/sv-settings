@@ -62,7 +62,25 @@ class CustomCollection implements CollectionInterface
 
     public function getList()
     {
-        return $this->storage->getList($this, $this->ownerProvider->getIdentifier());
+        $settings = [];
+        $storedSettings = $this->storage->getList($this, $this->ownerProvider->getIdentifier());
+
+        /** @var SettingInterface $setting */
+        foreach ($storedSettings as $setting) {
+            $settings[$setting->getName()] = $setting->getValue();
+        }
+
+        $notSet = array_diff_key($this->options->getSettings(), $settings);
+
+        foreach ($notSet as $name => $setting) {
+            if (isset($setting['default_value'])) {
+                $settings[$name] = $setting['default_value'];
+            } else {
+                $settings[$name] = null;
+            }
+        }
+
+        return $settings;
     }
 
     public function getOptions()

@@ -2,9 +2,11 @@
 
 namespace Svycka\Settings\Controller;
 
+use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
 use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ArrayUtils;
 use Zend\View\Model\JsonModel;
 use ZF\ApiProblem\ApiProblem;
@@ -29,6 +31,11 @@ final class SettingsApiController extends AbstractRestfulController
     protected $settingsManager;
 
     /**
+     * @var CollectionInterface
+     */
+    protected $settings;
+
+    /**
      * @param CollectionsManager $settingsManager
      */
     public function __construct(CollectionsManager $settingsManager)
@@ -43,13 +50,7 @@ final class SettingsApiController extends AbstractRestfulController
      */
     public function getList()
     {
-        $settings = $this->getCollection();
-
-        if (!$settings) {
-            return $this->collectionNotFoundResponse();
-        }
-
-        return new JsonModel($settings->getList());
+        return new JsonModel($this->settings->getList());
     }
 
     /**
@@ -61,14 +62,8 @@ final class SettingsApiController extends AbstractRestfulController
      */
     public function get($name)
     {
-        $settings = $this->getCollection();
-
-        if (!$settings) {
-            return $this->collectionNotFoundResponse();
-        }
-
         try {
-            $value = $settings->getValue($name);
+            $value = $this->settings->getValue($name);
             return new JsonModel([$name => $value]);
         } catch (SettingDoesNotExistException $exception) {
             return new ApiProblemResponse(new ApiProblem(404, $exception->getMessage()));
@@ -88,15 +83,9 @@ final class SettingsApiController extends AbstractRestfulController
             return new ApiProblemResponse(new ApiProblem(400, 'Data should be array of key => value pairs.'));
         }
 
-        $settings = $this->getCollection();
-
-        if (!$settings) {
-            return $this->collectionNotFoundResponse();
-        }
-
         try {
             foreach ($data as $key => $value) {
-                if ($settings->isValid($key, $value)) {
+                if ($this->settings->isValid($key, $value)) {
                     continue;
                 }
 
@@ -107,7 +96,7 @@ final class SettingsApiController extends AbstractRestfulController
         }
 
         foreach ($data as $key => $value) {
-            $settings->setValue($key, $value);
+            $this->settings->setValue($key, $value);
         }
 
         return new JsonModel($data);
@@ -123,18 +112,11 @@ final class SettingsApiController extends AbstractRestfulController
      */
     public function update($name, $data)
     {
-        $settings = $this->getCollection();
-
-        if (!$settings) {
-            return $this->collectionNotFoundResponse();
-        }
-
-        if (!$settings->isValid($name, $data)) {
-            return new ApiProblemResponse(new ApiProblem(400, 'Invalid parameters provided.'));
-        }
-
         try {
-            $settings->setValue($name, $data);
+            if (!$this->settings->isValid($name, $data)) {
+                return new ApiProblemResponse(new ApiProblem(400, 'Invalid parameters provided.'));
+            }
+            $this->settings->setValue($name, $data);
             return new JsonModel([$name => $data]);
         } catch (SettingDoesNotExistException $exception) {
             return new ApiProblemResponse(new ApiProblem(404, $exception->getMessage()));
@@ -153,32 +135,18 @@ final class SettingsApiController extends AbstractRestfulController
         return $this->create($data);
     }
 
-    /**
-     * Gets collection name from route and returns collection object
-     *
-     * @return null|\Svycka\Settings\Collection\CollectionInterface
-     */
-    private function getCollection()
+    public function onDispatch(MvcEvent $event)
     {
         $collection = $this->params()->fromRoute('collection');
 
         if (!$this->settingsManager->has($collection)) {
-            return null;
+            return new ApiProblemResponse(new ApiProblem(404, 'Settings collection not found.'));
         }
 
-        return $this->settingsManager->get($collection);
-    }
+        $this->settings = $this->settingsManager->get($collection);
 
-    /**
-     * Create NotFound response
-     *
-     * @return ApiProblemResponse
-     */
-    private function collectionNotFoundResponse()
-    {
-        return new ApiProblemResponse(new ApiProblem(404, 'Settings collection not found.'));
+        return parent::onDispatch($event);
     }
-
     /**
      * workaround: for https://github.com/zendframework/zend-mvc/issues/42
      * {@inheritdoc}
