@@ -2,9 +2,10 @@
 
 namespace Svycka\Settings\Collection\Factory;
 
+use Svycka\Settings\Collection\CollectionsManager;
+use Svycka\Settings\Collection\SettingsCollection;
 use Svycka\Settings\Options\CollectionOptions;
 use Svycka\Settings\Options\ModuleOptions;
-use Svycka\Settings\Collection\SettingsCollection;
 use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
@@ -36,11 +37,15 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param CollectionsManager|ServiceLocatorInterface $serviceLocator
+     * @param string                                     $name
+     * @param string                                     $requestedName
+     *
+     * @return SettingsCollection
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        /** @var ServiceLocatorInterface $serviceManager */
+        /** @var CollectionsManager $serviceLocator */
         $serviceManager = $serviceLocator->getServiceLocator();
 
         $config = new CollectionOptions($this->config[$requestedName]);
@@ -59,7 +64,7 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     /**
      * Retrieve configuration for settings collection, if any
      *
-     * @param  ServiceLocatorInterface $services
+     * @param  CollectionsManager|ServiceLocatorInterface $services
      * @return array
      */
     protected function getConfig(ServiceLocatorInterface $services)

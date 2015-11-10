@@ -27,4 +27,14 @@ interface ModuleOptionsInterface
      * @param array $collections
      */
     public function setCollections($collections);
+
+    /**
+     * @return array
+     */
+    public function getSettingsManager();
+
+    /**
+     * @param array $settingsManager
+     */
+    public function setSettingsManager($settingsManager);
 }
