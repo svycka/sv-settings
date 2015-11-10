@@ -73,6 +73,7 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
             return $this->config;
         }
 
+        /** @var CollectionsManager $services */
         /** @var ModuleOptions $options */
         $options = $services->getServiceLocator()->get(ModuleOptions::class);
         $config = $options->getCollections();

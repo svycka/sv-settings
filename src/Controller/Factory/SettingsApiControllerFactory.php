@@ -18,11 +18,13 @@ class SettingsApiControllerFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
-     * @return mixed
+     * @return SettingsApiController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        /** @var \Zend\Mvc\Controller\ControllerManager $serviceLocator */
         $serviceManager = $serviceLocator->getServiceLocator();
+        /** @var CollectionsManager $manager */
         $manager = $serviceManager->get(CollectionsManager::class);
 
         return new SettingsApiController($manager);
