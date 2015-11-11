@@ -32,6 +32,7 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
+        /** @var CollectionsManager $config */
         $config = $this->getConfig($serviceLocator);
         if (empty($config)) {
             return false;
