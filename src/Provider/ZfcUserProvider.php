@@ -33,7 +33,7 @@ class ZfcUserProvider implements OwnerProviderInterface
         $identity = $this->authenticationService->getIdentity();
 
         if (!$identity) {
-            throw new RuntimeException(__CLASS__ .' can not extract identifier if user is not authenticated');
+            throw new RuntimeException(__CLASS__.' can not extract identifier if user is not authenticated');
         }
 
         return $identity->getId();

@@ -18,6 +18,25 @@ use Zend\ServiceManager\Exception\RuntimeException;
 class TypesManager extends AbstractPluginManager
 {
     /**
+     * @var array
+     */
+    protected $invokableClasses = [
+        'inarray' => InArrayType::class,
+        'regex'   => RegexType::class,
+        'integer' => IntegerType::class,
+    ];
+
+    /**
+     * @workaround: for https://github.com/zendframework/zend-servicemanager/issues/50
+     * @var array
+     */
+    protected $aliases = [
+        'svyckasettingstypeinarraytype' => 'inarray',
+        'svyckasettingstyperegextype'   => 'regex',
+        'svyckasettingstypeintegertype' => 'integer',
+    ];
+
+    /**
      * Whether or not to share by default; default to false
      *
      * @var bool
@@ -40,9 +59,31 @@ class TypesManager extends AbstractPluginManager
             return; // we're okay
         }
         throw new RuntimeException(sprintf(
-            'SettingType of type %s is invalid; must implement %s',
+            'SettingType of type "%s" is invalid; must implement "%s"',
             (is_object($type) ? get_class($type) : gettype($type)),
             SettingTypeInterface::class
         ));
+    }
+
+    /**
+     * Override setInvokableClass().
+     *
+     * Performs normal operation, but also auto-aliases the class name to the
+     * service name. This ensures that providing the FQCN does not trigger an
+     * abstract factory later.
+     *
+     * @param  string       $name
+     * @param  string       $invokableClass
+     * @param  null|bool    $shared
+     * @return TypesManager
+     */
+    public function setInvokableClass($name, $invokableClass, $shared = null)
+    {
+        parent::setInvokableClass($name, $invokableClass, $shared);
+        if ($name != $invokableClass) {
+            $this->setAlias($invokableClass, $name);
+        }
+
+        return $this;
     }
 }

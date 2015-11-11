@@ -2,9 +2,10 @@
 
 namespace Svycka\Settings\Collection\Factory;
 
+use Svycka\Settings\Collection\CollectionsManager;
+use Svycka\Settings\Collection\SettingsCollection;
 use Svycka\Settings\Options\CollectionOptions;
 use Svycka\Settings\Options\ModuleOptions;
-use Svycka\Settings\Collection\SettingsCollection;
 use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
@@ -23,7 +24,11 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     protected $config;
 
     /**
-     * {@inheritdoc}
+     * @param CollectionsManager|ServiceLocatorInterface $serviceLocator
+     * @param string                                     $name
+     * @param string                                     $requestedName
+     *
+     * @return bool
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
@@ -36,11 +41,15 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param CollectionsManager|ServiceLocatorInterface $serviceLocator
+     * @param string                                     $name
+     * @param string                                     $requestedName
+     *
+     * @return SettingsCollection
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        /** @var ServiceLocatorInterface $serviceManager */
+        /** @var CollectionsManager $serviceLocator */
         $serviceManager = $serviceLocator->getServiceLocator();
 
         $config = new CollectionOptions($this->config[$requestedName]);
@@ -59,18 +68,19 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     /**
      * Retrieve configuration for settings collection, if any
      *
-     * @param  ServiceLocatorInterface $services
+     * @param  CollectionsManager $collectionsManager
+     *
      * @return array
      */
-    protected function getConfig(ServiceLocatorInterface $services)
+    protected function getConfig(CollectionsManager $collectionsManager)
     {
         if ($this->config !== null) {
             return $this->config;
         }
 
         /** @var ModuleOptions $options */
-        $options = $services->getServiceLocator()->get(ModuleOptions::class);
-        $config = $options->getCollections();
+        $options = $collectionsManager->getServiceLocator()->get(ModuleOptions::class);
+        $config  = $options->getCollections();
 
         $this->config = $config;
         return $this->config;

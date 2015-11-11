@@ -23,7 +23,7 @@ abstract class AbstractSettingType implements SettingTypeInterface
     public function setOptions($options)
     {
         if (!is_array($options)) {
-            throw new InvalidArgumentException(__METHOD__ . ' expects an array.');
+            throw new InvalidArgumentException(__METHOD__.' expects an array.');
         }
 
         $this->options = $options;
