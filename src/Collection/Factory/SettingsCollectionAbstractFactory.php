@@ -24,7 +24,11 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     protected $config;
 
     /**
-     * {@inheritdoc}
+     * @param CollectionsManager|ServiceLocatorInterface $serviceLocator
+     * @param string                                     $name
+     * @param string                                     $requestedName
+     *
+     * @return bool
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
@@ -64,19 +68,19 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
     /**
      * Retrieve configuration for settings collection, if any
      *
-     * @param  CollectionsManager|ServiceLocatorInterface $services
+     * @param  CollectionsManager $collectionsManager
+     *
      * @return array
      */
-    protected function getConfig(ServiceLocatorInterface $services)
+    protected function getConfig(CollectionsManager $collectionsManager)
     {
         if ($this->config !== null) {
             return $this->config;
         }
 
-        /** @var CollectionsManager $services */
         /** @var ModuleOptions $options */
-        $options = $services->getServiceLocator()->get(ModuleOptions::class);
-        $config = $options->getCollections();
+        $options = $collectionsManager->getServiceLocator()->get(ModuleOptions::class);
+        $config  = $options->getCollections();
 
         $this->config = $config;
         return $this->config;
