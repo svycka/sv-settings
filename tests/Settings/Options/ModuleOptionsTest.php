@@ -54,5 +54,4 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertSame($value, $this->options->getSettingsManager());
     }
-
 }

@@ -37,7 +37,6 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
         $entityManager->getRepository($this->collection->getOptions()->getObjectClass())
             ->willReturn($repository);
 
-
         $storage = new DoctrineStorage($entityManager->reveal());
         $this->assertSame($setting, $storage->get($this->collection, $identifier, $name));
     }

@@ -42,5 +42,4 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->service->isValid('my_collection', 'distance_unit', 'm'));
         $this->assertFalse($this->service->isValid('my_collection', 'distance_unit', 'invalid'));
     }
-
 }

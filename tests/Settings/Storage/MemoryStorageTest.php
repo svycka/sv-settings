@@ -48,7 +48,7 @@ class MemoryStorageTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new MemoryStorage();
         $storage->set($this->collection, $identifier1 = 'user1', $name = 'temperature_unit', $value = 'F');
-        $storage->set($this->collection, $identifier1 = 'user1', $name = 'distance_unit',    $value = 'km');
+        $storage->set($this->collection, $identifier1 = 'user1', $name = 'distance_unit', $value = 'km');
         $storage->set($this->collection, $identifier2 = 'user2', $name = 'temperature_unit', $value = 'F');
         $this->assertCount(2, $storage->getList($this->collection, $identifier1));
         $this->assertCount(1, $storage->getList($this->collection, $identifier2));
