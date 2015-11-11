@@ -21,8 +21,6 @@ class DoctrineStorageFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        // todo: maybe add config options for storage? Would not force orm_default.
-
         /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
 
