@@ -7,6 +7,7 @@ use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Controller\SettingsApiController;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
 use TestAssets\CustomCollection;
+use Zend\Http\Header\GenericHeader;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
@@ -147,15 +148,30 @@ class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($exceptionMessage, $result->getApiProblem()->detail);
     }
 
-    public function testCanSetSettings()
+    public function requestMethodProvider()
     {
-        $this->routeMatch->setParam($this->controller->getIdentifierName(), 'temperature_unit');
+        return [
+            [Request::METHOD_POST],
+            [Request::METHOD_PUT]
+        ];
+    }
+
+    /**
+     * @dataProvider requestMethodProvider
+     */
+    public function testCanSetSettings($request_method)
+    {
         $post = new Parameters([
             'temperature_unit' => 'F',
             'distance_unit' => 'km'
         ]);
-        $this->request->setPost($post);
-        $this->request->setMethod(Request::METHOD_POST);
+
+        if ($request_method == Request::METHOD_POST) {
+            $this->request->setPost($post);
+        } else {
+            $this->request->setContent($post->toString());
+        }
+        $this->request->setMethod($request_method);
         /** @var JsonModel $result */
         $result = $this->controller->dispatch($this->request, $this->response);
 
@@ -164,5 +180,95 @@ class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('km', $result->getVariable('distance_unit'));
         $this->assertEquals('F', $this->manager->get('my-collection')->getValue('temperature_unit'));
         $this->assertEquals('km', $this->manager->get('my-collection')->getValue('distance_unit'));
+    }
+
+    /**
+     * @dataProvider requestMethodProvider
+     */
+    public function testCanSetSettingsWithJsonData($request_method)
+    {
+        $json = json_encode([
+            'temperature_unit' => 'F',
+            'distance_unit' => 'km'
+        ]);
+
+        $this->request->getHeaders()->addHeader(new GenericHeader('Content-Type', 'application/json'));
+        $this->request->setContent($json);
+        $this->request->setMethod($request_method);
+        /** @var JsonModel $result */
+        $result = $this->controller->dispatch($this->request, $this->response);
+
+        $this->assertInstanceOf(JsonModel::class, $result);
+        $this->assertEquals('F', $result->getVariable('temperature_unit'));
+        $this->assertEquals('km', $result->getVariable('distance_unit'));
+        $this->assertEquals('F', $this->manager->get('my-collection')->getValue('temperature_unit'));
+        $this->assertEquals('km', $this->manager->get('my-collection')->getValue('distance_unit'));
+    }
+
+    /**
+     * @dataProvider requestMethodProvider
+     */
+    public function testCanDetectInvalidPost($request_method)
+    {
+        $this->request->setContent('invalid');
+        $this->request->setMethod($request_method);
+        /** @var JsonModel $result */
+        $result = $this->controller->dispatch($this->request, $this->response);
+
+        $this->assertInstanceOf(ApiProblemResponse::class, $result);
+        $this->assertEquals(400, $result->getStatusCode());
+        $this->assertEquals('Data should be array of key => value pairs.', $result->getApiProblem()->detail);
+    }
+
+    /**
+     * @dataProvider requestMethodProvider
+     */
+    public function testReturnErrorWithAtLeastOneNotValidSettingValue($request_method)
+    {
+        $post = new Parameters([
+            'temperature_unit' => 'F',
+            'distance_unit' => 'kg'
+        ]);
+        if ($request_method == Request::METHOD_POST) {
+            $this->request->setPost($post);
+        } else {
+            $this->request->setContent($post->toString());
+        }
+        $this->request->setMethod($request_method);
+        /** @var JsonModel $result */
+        $result = $this->controller->dispatch($this->request, $this->response);
+
+        $this->assertInstanceOf(ApiProblemResponse::class, $result);
+        $this->assertEquals(400, $result->getStatusCode());
+        $this->assertEquals('Invalid parameters provided.', $result->getApiProblem()->detail);
+    }
+
+    /**
+     * @dataProvider requestMethodProvider
+     */
+    public function testReturnErrorWithAtLeastOneNotExistingSetting($request_method)
+    {
+        $collection = $this->prophesize(CollectionInterface::class);
+        $collection->isValid($settingName = 'temperature_unit', $value = 'F')->willReturn(true);
+        $collection->isValid($settingName = 'weight_unit', $value = 'kg')
+            ->willThrow(new SettingDoesNotExistException($exceptionMessage = 'setting not found'));
+        $this->manager->setService('collection_name', $collection->reveal());
+        $post = new Parameters([
+            'temperature_unit' => 'F',
+            'weight_unit' => 'kg'
+        ]);
+        if ($request_method == Request::METHOD_POST) {
+            $this->request->setPost($post);
+        } else {
+            $this->request->setContent($post->toString());
+        }
+        $this->request->setMethod($request_method);
+        $this->routeMatch->setParam('collection', 'collection_name');
+        /** @var JsonModel $result */
+        $result = $this->controller->dispatch($this->request, $this->response);
+
+        $this->assertInstanceOf(ApiProblemResponse::class, $result);
+        $this->assertEquals(404, $result->getStatusCode());
+        $this->assertEquals($exceptionMessage, $result->getApiProblem()->detail);
     }
 }
