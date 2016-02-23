@@ -24,6 +24,8 @@ class TypesManager extends AbstractPluginManager
         'inarray' => InArrayType::class,
         'regex'   => RegexType::class,
         'integer' => IntegerType::class,
+        'float' => FloatType::class,
+        'string' => StringType::class,
     ];
 
     /**
@@ -34,6 +36,8 @@ class TypesManager extends AbstractPluginManager
         'svyckasettingstypeinarraytype' => 'inarray',
         'svyckasettingstyperegextype'   => 'regex',
         'svyckasettingstypeintegertype' => 'integer',
+        'svyckasettingstypefloattype' => 'float',
+        'svyckasettingstypestringtype' => 'string',
     ];
 
     /**
