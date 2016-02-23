@@ -2,9 +2,11 @@
 
 namespace Svycka\SettingsTest\Type;
 
+use Svycka\Settings\Type\FloatType;
 use Svycka\Settings\Type\InArrayType;
 use Svycka\Settings\Type\IntegerType;
 use Svycka\Settings\Type\RegexType;
+use Svycka\Settings\Type\StringType;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\CustomSettingType;
 use Zend\ServiceManager\Config;
@@ -25,6 +27,10 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($manager->has(IntegerType::class));
         $this->assertTrue($manager->has('regex'));
         $this->assertTrue($manager->has(RegexType::class));
+        $this->assertTrue($manager->has('float'));
+        $this->assertTrue($manager->has(FloatType::class));
+        $this->assertTrue($manager->has('string'));
+        $this->assertTrue($manager->has(StringType::class));
     }
 
     public function testCanGetDefaultTypes()
@@ -33,6 +39,8 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(InArrayType::class, $manager->get(InArrayType::class));
         $this->assertInstanceOf(IntegerType::class, $manager->get(IntegerType::class));
         $this->assertInstanceOf(RegexType::class, $manager->get(RegexType::class));
+        $this->assertInstanceOf(FloatType::class, $manager->get(FloatType::class));
+        $this->assertInstanceOf(StringType::class, $manager->get(StringType::class));
     }
 
     public function testCanAddCustomType()
