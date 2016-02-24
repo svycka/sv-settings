@@ -32,5 +32,5 @@ script:
   - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/phpcs ; fi
 
 after_script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi
+  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls -v ; fi
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/ocular code-coverage:upload --format=php-clover clover.xml ; fi
