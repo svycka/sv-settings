@@ -20,12 +20,12 @@ class TypesManager extends AbstractPluginManager
     /**
      * @var array
      */
-    protected $invokableClasses = [
-        'inarray' => InArrayType::class,
-        'regex'   => RegexType::class,
-        'integer' => IntegerType::class,
-        'float' => FloatType::class,
-        'string' => StringType::class,
+    protected $factories = [
+        InArrayType::class => InvokableFactory::class,
+        RegexType::class => InvokableFactory::class,
+        IntegerType::class => InvokableFactory::class,
+        FloatType::class => InvokableFactory::class,
+        StringType::class => InvokableFactory::class,
     ];
 
     /**
@@ -33,11 +33,11 @@ class TypesManager extends AbstractPluginManager
      * @var array
      */
     protected $aliases = [
-        'svyckasettingstypeinarraytype' => 'inarray',
-        'svyckasettingstyperegextype'   => 'regex',
-        'svyckasettingstypeintegertype' => 'integer',
-        'svyckasettingstypefloattype' => 'float',
-        'svyckasettingstypestringtype' => 'string',
+        'inarray' => InArrayType::class,
+        'regex'   => RegexType::class,
+        'integer' => IntegerType::class,
+        'float' => FloatType::class,
+        'string' => StringType::class,
     ];
 
     /**
