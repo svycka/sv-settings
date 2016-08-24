@@ -22,7 +22,7 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "zendframework/zend-modulemanager": "^2.6.1",
-        "zendframework/zend-servicemanager": "^2.7.6 || ^3.1.1",
+        "zendframework/zend-servicemanager": "^2.7.5 || ^3.1.1",
         "zendframework/zend-stdlib": "^2.5.2 || ^3.0.1",
         "zendframework/zend-i18n": "^2.6",
         "zendframework/zend-validator": "^2.5.2"
