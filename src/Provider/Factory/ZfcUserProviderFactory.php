@@ -2,28 +2,27 @@
 
 namespace Svycka\Settings\Provider\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Provider\ZfcUserProvider;
 use Zend\Authentication\AuthenticationService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ZfcUserProviderFactory implements FactoryInterface
+class ZfcUserProviderFactory
 {
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
      *
      * @return ZfcUserProvider
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
         /** @var AuthenticationService $authenticationService */
-        $authenticationService = $serviceLocator->get('zfcuser_auth_service');
+        $authenticationService = $container->get('zfcuser_auth_service');
 
         return new ZfcUserProvider($authenticationService);
     }

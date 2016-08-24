@@ -2,18 +2,17 @@
 
 namespace Svycka\Settings\Options\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Options\ModuleOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ModuleOptionsFactory implements FactoryInterface
+class ModuleOptionsFactory
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        return new ModuleOptions($serviceLocator->get('Config')['sv-settings']);
+        return new ModuleOptions($container->get('config')['sv-settings']);
     }
 }

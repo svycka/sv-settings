@@ -2,10 +2,11 @@
 
 namespace Svycka\SettingsTest\Service\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Service\Factory\SettingsServiceFactory;
 use Svycka\Settings\Service\SettingsService;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -15,11 +16,11 @@ class SettingsServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreate()
     {
-        $serviceManager = $this->prophesize(ServiceLocatorInterface::class);
-        $serviceManager->get(CollectionsManager::class)->willReturn(new CollectionsManager());
+        $serviceManager = $this->prophesize(ContainerInterface::class);
+        $serviceManager->get(CollectionsManager::class)->willReturn(new CollectionsManager(new ServiceManager()));
 
         $factory = new SettingsServiceFactory();
-        $service = $factory->createService($serviceManager->reveal());
+        $service = $factory($serviceManager->reveal());
         $this->assertInstanceOf(SettingsService::class, $service);
     }
 }

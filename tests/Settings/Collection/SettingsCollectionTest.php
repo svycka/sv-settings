@@ -13,6 +13,7 @@ use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\UserCollectionOptions;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -31,20 +32,20 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
             new UserCollectionOptions(),
             new MemoryStorage(),
             new NullProvider(),
-            new TypesManager()
+            new TypesManager(new ServiceManager())
         );
     }
 
     public function testConstructorCanCreateCollectionWithInterfaces()
     {
         /** @var CollectionOptionsInterface $options */
-        $options = $this->getMock(CollectionOptionsInterface::class);
+        $options = $this->prophesize(CollectionOptionsInterface::class)->reveal();
         /** @var StorageAdapterInterface $adapter */
-        $adapter = $this->getMock(StorageAdapterInterface::class);
+        $adapter = $this->prophesize(StorageAdapterInterface::class)->reveal();
         /** @var OwnerProviderInterface $owner_provider */
-        $owner_provider = $this->getMock(OwnerProviderInterface::class);
+        $owner_provider = $this->prophesize(OwnerProviderInterface::class)->reveal();
         /** @var TypesManager $types_manager */
-        $types_manager = $this->getMock(TypesManager::class);
+        $types_manager = $this->prophesize(TypesManager::class)->reveal();
 
         new SettingsCollection($options, $adapter, $owner_provider, $types_manager);
     }

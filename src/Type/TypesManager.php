@@ -3,7 +3,8 @@
 namespace Svycka\Settings\Type;
 
 use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\RuntimeException;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class TypesManager
@@ -20,24 +21,36 @@ class TypesManager extends AbstractPluginManager
     /**
      * @var array
      */
-    protected $invokableClasses = [
+    protected $factories = [
+        InArrayType::class => InvokableFactory::class,
+        RegexType::class => InvokableFactory::class,
+        IntegerType::class => InvokableFactory::class,
+        FloatType::class => InvokableFactory::class,
+        StringType::class => InvokableFactory::class,
+
+        // v2 canonical FQCNs
+
+        'svyckasettingstypeinarraytype' => InvokableFactory::class,
+        'svyckasettingstyperegextype' => InvokableFactory::class,
+        'svyckasettingstypeintegertype' => InvokableFactory::class,
+        'svyckasettingstypefloattype' => InvokableFactory::class,
+        'svyckasettingstypestringtype' => InvokableFactory::class,
+    ];
+
+    /**
+     * @var array
+     */
+    protected $aliases = [
         'inarray' => InArrayType::class,
         'regex'   => RegexType::class,
         'integer' => IntegerType::class,
         'float' => FloatType::class,
         'string' => StringType::class,
-    ];
 
-    /**
-     * @workaround: for https://github.com/zendframework/zend-servicemanager/issues/50
-     * @var array
-     */
-    protected $aliases = [
-        'svyckasettingstypeinarraytype' => 'inarray',
-        'svyckasettingstyperegextype'   => 'regex',
-        'svyckasettingstypeintegertype' => 'integer',
-        'svyckasettingstypefloattype' => 'float',
-        'svyckasettingstypestringtype' => 'string',
+        /**
+         * @deprecated only for BC reasons, will be removed when possible
+         */
+        'in_array' => 'inarray',
     ];
 
     /**
@@ -57,12 +70,12 @@ class TypesManager extends AbstractPluginManager
      * @return void
      * @throws \RuntimeException if invalid
      */
-    public function validatePlugin($type)
+    public function validate($type)
     {
         if ($type instanceof SettingTypeInterface) {
             return; // we're okay
         }
-        throw new RuntimeException(sprintf(
+        throw new InvalidServiceException(sprintf(
             'SettingType of type "%s" is invalid; must implement "%s"',
             (is_object($type) ? get_class($type) : gettype($type)),
             SettingTypeInterface::class
@@ -70,24 +83,17 @@ class TypesManager extends AbstractPluginManager
     }
 
     /**
-     * Override setInvokableClass().
+     * Validate the plugin
      *
-     * Performs normal operation, but also auto-aliases the class name to the
-     * service name. This ensures that providing the FQCN does not trigger an
-     * abstract factory later.
+     * Checks that the type loaded is instance of SettingTypeInterface.
      *
-     * @param  string       $name
-     * @param  string       $invokableClass
-     * @param  null|bool    $shared
-     * @return TypesManager
+     * @param  SettingTypeInterface $type
+     *
+     * @return void
+     * @throws \RuntimeException if invalid
      */
-    public function setInvokableClass($name, $invokableClass, $shared = null)
+    public function validatePlugin($type)
     {
-        parent::setInvokableClass($name, $invokableClass, $shared);
-        if ($name != $invokableClass) {
-            $this->setAlias($invokableClass, $name);
-        }
-
-        return $this;
+        $this->validate($type);
     }
 }

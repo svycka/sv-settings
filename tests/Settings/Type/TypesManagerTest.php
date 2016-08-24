@@ -9,8 +9,9 @@ use Svycka\Settings\Type\RegexType;
 use Svycka\Settings\Type\StringType;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\CustomSettingType;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\Exception\RuntimeException;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -20,22 +21,28 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasDefaultTypes()
     {
-        $manager = new TypesManager();
-        $this->assertTrue($manager->has('in_array'));
-        $this->assertTrue($manager->has(InArrayType::class));
-        $this->assertTrue($manager->has('integer'));
-        $this->assertTrue($manager->has(IntegerType::class));
-        $this->assertTrue($manager->has('regex'));
-        $this->assertTrue($manager->has(RegexType::class));
-        $this->assertTrue($manager->has('float'));
-        $this->assertTrue($manager->has(FloatType::class));
-        $this->assertTrue($manager->has('string'));
-        $this->assertTrue($manager->has(StringType::class));
+        $manager = new TypesManager(new ServiceManager());
+        $types = [
+            'inarray',
+            'in_array',
+            InArrayType::class,
+            'integer',
+            IntegerType::class,
+            'regex',
+            RegexType::class,
+            'float',
+            FloatType::class,
+            'string',
+            StringType::class,
+        ];
+        foreach ($types as $type) {
+            $this->assertTrue($manager->has($type), sprintf('"%s" type should exist', $type));
+        }
     }
 
     public function testCanGetDefaultTypes()
     {
-        $manager = new TypesManager();
+        $manager = new TypesManager(new ServiceManager());
         $this->assertInstanceOf(InArrayType::class, $manager->get(InArrayType::class));
         $this->assertInstanceOf(IntegerType::class, $manager->get(IntegerType::class));
         $this->assertInstanceOf(RegexType::class, $manager->get(RegexType::class));
@@ -45,10 +52,15 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAddCustomType()
     {
-        $config = new Config(['invokables' => [
-            'custom_type' => CustomSettingType::class,
-        ]]);
-        $manager = new TypesManager($config);
+        $config = [
+            'factories' => [
+                CustomSettingType::class => InvokableFactory::class,
+            ],
+            'aliases' => [
+                'custom_type' => CustomSettingType::class,
+            ],
+        ];
+        $manager = new TypesManager(new ServiceManager(), $config);
 
         $this->assertTrue($manager->has('custom_type'));
         $this->assertTrue($manager->has(CustomSettingType::class));
@@ -57,14 +69,17 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesNotAllowInvalidTypes()
     {
-        $config = new Config([
-            'invokables' => [
-                'custom_type' => \stdClass::class,
+        $config = [
+            'factories' => [
+                \stdClass::class => InvokableFactory::class,
+            ],
+            'aliases' => [
+                'invalid_type' => \stdClass::class,
             ]
-        ]);
-        $manager = new TypesManager($config);
+        ];
+        $manager = new TypesManager(new ServiceManager(), $config);
 
-        $this->setExpectedException(RuntimeException::class);
-        $manager->get('custom_type');
+        $this->setExpectedException(InvalidServiceException::class);
+        $manager->get('invalid_type');
     }
 }

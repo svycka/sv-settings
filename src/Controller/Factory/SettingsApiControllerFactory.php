@@ -2,6 +2,7 @@
 
 namespace Svycka\Settings\Controller\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Controller\SettingsApiController;
 use Zend\ServiceManager\FactoryInterface;
@@ -13,6 +14,14 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class SettingsApiControllerFactory implements FactoryInterface
 {
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        /** @var CollectionsManager $manager */
+        $manager = $container->get(CollectionsManager::class);
+
+        return new SettingsApiController($manager);
+    }
+
     /**
      * Create service
      *
@@ -22,11 +31,6 @@ class SettingsApiControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var \Zend\Mvc\Controller\ControllerManager $serviceLocator */
-        $serviceManager = $serviceLocator->getServiceLocator();
-        /** @var CollectionsManager $manager */
-        $manager = $serviceManager->get(CollectionsManager::class);
-
-        return new SettingsApiController($manager);
+        return $this($serviceLocator->getServiceLocator(), SettingsApiController::class);
     }
 }

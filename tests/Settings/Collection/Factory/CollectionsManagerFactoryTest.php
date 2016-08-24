@@ -2,10 +2,10 @@
 
 namespace Svycka\SettingsTest\Collection\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Collection\Factory\CollectionsManagerFactory;
 use Svycka\Settings\Options\ModuleOptions;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -15,11 +15,11 @@ class CollectionsManagerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreate()
     {
-        $serviceManager = $this->prophesize(ServiceLocatorInterface::class);
+        $serviceManager = $this->prophesize(ContainerInterface::class);
         $serviceManager->get(ModuleOptions::class)->willReturn(new ModuleOptions);
 
         $factory = new CollectionsManagerFactory();
-        $manager = $factory->createService($serviceManager->reveal());
+        $manager = $factory($serviceManager->reveal());
         $this->assertInstanceOf(CollectionsManager::class, $manager);
     }
 }

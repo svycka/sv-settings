@@ -4,8 +4,7 @@ namespace Svycka\Settings\Collection;
 
 use Svycka\Settings\Collection\Factory\SettingsCollectionAbstractFactory;
 use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\ConfigInterface;
-use Zend\ServiceManager\Exception\RuntimeException;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 
 /**
  * Class CollectionsManager
@@ -20,13 +19,18 @@ use Zend\ServiceManager\Exception\RuntimeException;
 class CollectionsManager extends AbstractPluginManager
 {
     /**
-     * CollectionsManager constructor.
+     * An object type that the created instance must be instanced of
      *
-     * @param ConfigInterface|null $configuration
+     * @var null|string
      */
-    public function __construct(ConfigInterface $configuration = null)
+    protected $instanceOf = CollectionInterface::class;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($configInstanceOrParentLocator = null, array $config = [])
     {
-        parent::__construct($configuration);
+        parent::__construct($configInstanceOrParentLocator, $config);
 
         $this->addAbstractFactory(SettingsCollectionAbstractFactory::class);
     }
@@ -36,42 +40,41 @@ class CollectionsManager extends AbstractPluginManager
      *
      * Checks that the collection loaded is instance of CollectionInterface.
      *
-     * @param  CollectionInterface $collection
+     * @param  CollectionInterface $instance
      *
      * @return void
-     * @throws RuntimeException if invalid
+     * @throws InvalidServiceException if invalid
+     *
+     * @deprecated will be removed after zf2 support drop (only required to prevent deprecated warning)
      */
-    public function validatePlugin($collection)
+    public function validate($instance)
     {
-        if ($collection instanceof CollectionInterface) {
-            return; // we're okay
+        if (empty($this->instanceOf) || $instance instanceof $this->instanceOf) {
+            return;
         }
-        throw new RuntimeException(sprintf(
-            'Settings collection of type %s is invalid; must implement %s',
-            (is_object($collection) ? get_class($collection) : gettype($collection)),
-            CollectionInterface::class
+
+        throw new InvalidServiceException(sprintf(
+            'Plugin manager "%s" expected an instance of type "%s", but "%s" was received',
+            __CLASS__,
+            $this->instanceOf,
+            is_object($instance) ? get_class($instance) : gettype($instance)
         ));
     }
 
     /**
-     * Override setInvokableClass().
+     * Validate the plugin
      *
-     * Performs normal operation, but also auto-aliases the class name to the
-     * service name. This ensures that providing the FQCN does not trigger an
-     * abstract factory later.
+     * Checks that the collection loaded is instance of CollectionInterface.
      *
-     * @param  string       $name
-     * @param  string       $invokableClass
-     * @param  null|bool    $shared
-     * @return CollectionsManager
+     * @param  CollectionInterface $instance
+     *
+     * @return void
+     * @throws InvalidServiceException if invalid
+     *
+     * @deprecated will be removed after zf2 support drop
      */
-    public function setInvokableClass($name, $invokableClass, $shared = null)
+    public function validatePlugin($instance)
     {
-        parent::setInvokableClass($name, $invokableClass, $shared);
-        if ($name != $invokableClass) {
-            $this->setAlias($invokableClass, $name);
-        }
-
-        return $this;
+        $this->validate($instance);
     }
 }

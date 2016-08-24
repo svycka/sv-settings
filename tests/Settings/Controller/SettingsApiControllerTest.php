@@ -13,6 +13,7 @@ use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\ServiceManager\Config;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\Parameters;
 use Zend\View\Model\JsonModel;
 use ZF\ApiProblem\ApiProblemResponse;
@@ -38,10 +39,10 @@ class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $config = new Config(['invokables' => [
+        $config = ['invokables' => [
             'my-collection' => CustomCollection::class,
-        ]]);
-        $this->manager = new CollectionsManager($config);
+        ]];
+        $this->manager = new CollectionsManager(new ServiceManager(), $config);
         $this->controller = new SettingsApiController($this->manager);
         $this->request = new Request();
         $this->response = new Response();

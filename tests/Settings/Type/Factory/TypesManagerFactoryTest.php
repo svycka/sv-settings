@@ -19,7 +19,7 @@ class TypesManagerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->get(ModuleOptions::class)->willReturn(new ModuleOptions);
 
         $factory = new TypesManagerFactory();
-        $manager = $factory->createService($serviceManager->reveal());
+        $manager = $factory($serviceManager->reveal());
         $this->assertInstanceOf(TypesManager::class, $manager);
     }
 }

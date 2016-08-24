@@ -19,7 +19,7 @@ class ZfcUserProviderFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->get('zfcuser_auth_service')->willReturn($this->getMock(AuthenticationService::class));
 
         $factory = new ZfcUserProviderFactory();
-        $provider = $factory->createService($serviceManager->reveal());
+        $provider = $factory($serviceManager->reveal());
         $this->assertInstanceOf(ZfcUserProvider::class, $provider);
     }
 }

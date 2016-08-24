@@ -20,7 +20,7 @@ class DoctrineStorageFactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->getMock(EntityManagerInterface::class));
 
         $factory = new DoctrineStorageFactory();
-        $storage = $factory->createService($serviceManager->reveal());
+        $storage = $factory($serviceManager->reveal());
         $this->assertInstanceOf(DoctrineStorage::class, $storage);
     }
 }

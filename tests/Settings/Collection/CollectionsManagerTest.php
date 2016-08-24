@@ -2,6 +2,7 @@
 
 namespace Svycka\SettingsTest\Collection;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Collection\SettingsCollection;
 use Svycka\Settings\Options\ModuleOptions;
@@ -9,10 +10,10 @@ use Svycka\Settings\Provider\NullProvider;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\CustomCollection;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\Exception\RuntimeException;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -22,10 +23,15 @@ class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanAddCustomType()
     {
-        $config = new Config(['invokables' => [
-            'custom_collection' => CustomCollection::class,
-        ]]);
-        $manager = new CollectionsManager($config);
+        $config = [
+            'factories' => [
+                CustomCollection::class => InvokableFactory::class,
+            ],
+            'aliases' => [
+                'custom_collection' => CustomCollection::class,
+            ],
+        ];
+        $manager = new CollectionsManager(new ServiceManager(), $config);
 
         $this->assertTrue($manager->has('custom_collection'));
         $this->assertTrue($manager->has(CustomCollection::class));
@@ -34,30 +40,29 @@ class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testDoesNotAllowInvalidTypes()
     {
-        $config = new Config([
-            'invokables' => [
+        $config = [
+            'factories' => [
+                \stdClass::class => InvokableFactory::class,
+            ],
+            'aliases' => [
                 'invalid_collection' => \stdClass::class,
-            ]
-        ]);
-        $manager = new CollectionsManager($config);
+            ],
+        ];
+        $manager = new CollectionsManager(new ServiceManager(), $config);
 
-        $this->setExpectedException(RuntimeException::class);
+        $this->setExpectedException(InvalidServiceException::class);
         $manager->get('invalid_collection');
     }
 
     public function testThrowExceptionIfNotExist()
     {
-        $serviceLocator = $this->prophesize(ServiceLocatorInterface::class);
-        $serviceLocator->get(ModuleOptions::class)->willReturn(new ModuleOptions());
-        $serviceLocator->has('not_exist')->willReturn(false);
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get(ModuleOptions::class)->willReturn(new ModuleOptions());
+        $container->has('not_exist')->willReturn(false);
 
-        $manager = new CollectionsManager();
-        $manager->setServiceLocator($serviceLocator->reveal());
+        $manager = new CollectionsManager($container->reveal());
 
-        $this->setExpectedException(
-            ServiceNotFoundException::class,
-            sprintf('%s::get was unable to fetch or create an instance for not_exist', CollectionsManager::class)
-        );
+        $this->setExpectedException(ServiceNotFoundException::class);
         $manager->get('not_exist');
     }
 
@@ -77,15 +82,14 @@ class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $serviceLocator = $this->prophesize(ServiceLocatorInterface::class);
-        $serviceLocator->get(ModuleOptions::class)->willReturn($moduleOptions);
-        $serviceLocator->get(MemoryStorage::class)->willReturn(new MemoryStorage);
-        $serviceLocator->get(NullProvider::class)->willReturn(new NullProvider);
-        $serviceLocator->get(TypesManager::class)->willReturn(new TypesManager());
-        $serviceLocator->has('custom-settings')->willReturn(false);
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get(ModuleOptions::class)->willReturn($moduleOptions);
+        $container->get(MemoryStorage::class)->willReturn(new MemoryStorage);
+        $container->get(NullProvider::class)->willReturn(new NullProvider);
+        $container->get(TypesManager::class)->willReturn(new TypesManager(new ServiceManager()));
+        $container->has('custom-settings')->willReturn(false);
 
-        $manager = new CollectionsManager();
-        $manager->setServiceLocator($serviceLocator->reveal());
+        $manager = new CollectionsManager($container->reveal());
 
         $collection = $manager->get('custom-settings');
         $this->assertInstanceOf(SettingsCollection::class, $collection);
