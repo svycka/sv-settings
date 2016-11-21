@@ -17,10 +17,10 @@ class DoctrineStorageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceManager = $this->prophesize(ServiceLocatorInterface::class);
         $serviceManager->get('doctrine.entitymanager.orm_default')
-            ->willReturn($this->getMock(EntityManagerInterface::class));
+            ->willReturn($this->prophesize(EntityManagerInterface::class)->reveal());
 
         $factory = new DoctrineStorageFactory();
-        $storage = $factory->createService($serviceManager->reveal());
+        $storage = $factory($serviceManager->reveal());
         $this->assertInstanceOf(DoctrineStorage::class, $storage);
     }
 }

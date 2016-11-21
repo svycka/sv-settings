@@ -22,7 +22,7 @@ class StringTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->isValid(0));
         $this->assertFalse($validator->isValid(''));
-        $this->assertfalse($validator->isValid('aa'));
-        $this->assertfalse($validator->isValid('123456'));
+        $this->assertFalse($validator->isValid('aa'));
+        $this->assertFalse($validator->isValid('123456'));
     }
 }

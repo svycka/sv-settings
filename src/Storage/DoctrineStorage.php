@@ -10,7 +10,7 @@ use Svycka\Settings\Entity\SettingInterface;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class DoctrineStorage implements StorageAdapterInterface
+final class DoctrineStorage implements StorageAdapterInterface
 {
     /**
      * @var EntityManagerInterface

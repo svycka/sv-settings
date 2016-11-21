@@ -46,7 +46,7 @@ final class SettingsApiController extends AbstractRestfulController
     /**
      * Get list of settings in the given collection
      *
-     * @return array|ApiProblemResponse
+     * @return JsonModel
      */
     public function getList()
     {
@@ -58,7 +58,7 @@ final class SettingsApiController extends AbstractRestfulController
      *
      * @param mixed $name
      *
-     * @return array|ApiProblemResponse
+     * @return JsonModel|ApiProblemResponse
      */
     public function get($name)
     {
@@ -75,7 +75,7 @@ final class SettingsApiController extends AbstractRestfulController
      *
      * @param array $data
      *
-     * @return mixed|ApiProblemResponse
+     * @return JsonModel|ApiProblemResponse
      */
     public function create($data)
     {
@@ -108,7 +108,7 @@ final class SettingsApiController extends AbstractRestfulController
      * @param string $name
      * @param mixed $data
      *
-     * @return ApiProblemResponse
+     * @return JsonModel|ApiProblemResponse
      */
     public function update($name, $data)
     {
@@ -126,9 +126,9 @@ final class SettingsApiController extends AbstractRestfulController
     /**
      * Create or update settings in collection
      *
-     * @param mixed $data
+     * @param array $data
      *
-     * @return mixed|ApiProblemResponse
+     * @return JsonModel|ApiProblemResponse
      */
     public function replaceList($data)
     {
@@ -146,29 +146,5 @@ final class SettingsApiController extends AbstractRestfulController
         $this->settings = $this->settingsManager->get($collection);
 
         return parent::onDispatch($event);
-    }
-    /**
-     * workaround: for https://github.com/zendframework/zend-mvc/issues/42
-     * {@inheritdoc}
-     */
-    protected function processBodyContent($request)
-    {
-        $content = $request->getContent();
-
-        // JSON content? decode and return it.
-        if ($this->requestHasContentType($request, self::CONTENT_TYPE_JSON)) {
-            return json_decode($content, $this->jsonDecodeType);
-        }
-
-        parse_str($content, $parsedParams);
-
-        // If parse_str fails to decode, or we have a single element with empty value
-        if (!is_array($parsedParams) || empty($parsedParams)
-            || (1 == count($parsedParams) && '' === reset($parsedParams))
-        ) {
-            return $content;
-        }
-
-        return $parsedParams;
     }
 }

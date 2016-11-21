@@ -8,7 +8,7 @@ use Zend\I18n\Validator\IsFloat;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class FloatType extends AbstractSettingType
+final class FloatType extends AbstractSettingType
 {
     /**
      * {@inheritdoc}

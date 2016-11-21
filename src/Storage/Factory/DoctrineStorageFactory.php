@@ -2,27 +2,26 @@
 
 namespace Svycka\Settings\Storage\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Storage\DoctrineStorage;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class DoctrineStorageFactory implements FactoryInterface
+final class DoctrineStorageFactory
 {
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
      *
      * @return DoctrineStorage
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
         /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
-        $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
+        $entityManager = $container->get('doctrine.entitymanager.orm_default');
 
         return new DoctrineStorage($entityManager);
     }

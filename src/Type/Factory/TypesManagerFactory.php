@@ -2,24 +2,22 @@
 
 namespace Svycka\Settings\Type\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Options\ModuleOptions;
 use Svycka\Settings\Type\TypesManager;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class TypesManagerFactory implements FactoryInterface
+final class TypesManagerFactory
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
         /** @var ModuleOptions $options */
-        $options = $serviceLocator->get(ModuleOptions::class);
-        $serviceConfig = new Config($options->getTypes());
+        $options = $container->get(ModuleOptions::class);
+        $serviceConfig = $options->getTypes();
 
-        return new TypesManager($serviceConfig);
+        return new TypesManager($container, $serviceConfig);
     }
 }

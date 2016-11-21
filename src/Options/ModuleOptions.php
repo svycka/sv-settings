@@ -8,7 +8,7 @@ use Zend\Stdlib\AbstractOptions;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
+final class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {
     protected $types = [];
     protected $settingsManager = [];

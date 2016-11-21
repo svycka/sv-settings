@@ -2,21 +2,20 @@
 
 namespace Svycka\Settings\Service\Factory;
 
+use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Service\SettingsService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsServiceFactory implements FactoryInterface
+final class SettingsServiceFactory
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
         /** @var CollectionsManager $collectionsManager */
-        $collectionsManager = $serviceLocator->get(CollectionsManager::class);
+        $collectionsManager = $container->get(CollectionsManager::class);
 
         return new SettingsService($collectionsManager);
     }

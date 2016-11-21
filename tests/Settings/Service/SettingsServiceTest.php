@@ -7,6 +7,7 @@ use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Service\SettingsService;
 use TestAssets\CustomCollection;
 use Zend\ServiceManager\Config;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -19,10 +20,10 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $config = new Config(['invokables' => [
+        $config = ['invokables' => [
             'my_collection' => CustomCollection::class,
-        ]]);
-        $manager = new CollectionsManager($config);
+        ]];
+        $manager = new CollectionsManager(new ServiceManager(), $config);
         $this->service = new SettingsService($manager);
     }
 

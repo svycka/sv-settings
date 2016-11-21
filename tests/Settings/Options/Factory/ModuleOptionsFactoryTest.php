@@ -15,7 +15,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCanCreate()
     {
         $serviceManager = $this->prophesize(ServiceLocatorInterface::class);
-        $serviceManager->get('Config')
+        $serviceManager->get('config')
             ->willReturn([
                 'sv-settings' => [
                     'collections' => [],
@@ -25,7 +25,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
             ]);
 
         $factory = new ModuleOptionsFactory();
-        $options = $factory->createService($serviceManager->reveal());
+        $options = $factory($serviceManager->reveal());
         $this->assertInstanceOf(ModuleOptions::class, $options);
     }
 }

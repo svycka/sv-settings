@@ -8,7 +8,7 @@ use Svycka\Settings\Collection\CollectionsManager;
  * @author  Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsService
+final class SettingsService
 {
     /**
      * @var CollectionsManager

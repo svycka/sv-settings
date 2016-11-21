@@ -10,7 +10,7 @@ namespace Svycka\Settings\Provider;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class NullProvider implements OwnerProviderInterface
+final class NullProvider implements OwnerProviderInterface
 {
     /**
      * @return null

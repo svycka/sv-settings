@@ -46,7 +46,7 @@ return [
             // key is collection name
             'zfcuser_settings' => [
                 'storage_adapter' => \Svycka\Settings\Storage\DoctrineStorage::class,
-                'owner_provider' => \Svycka\Settings\Provider\ZfcUserProvider::class,
+                'owner_provider' => \Application\Settings\Provider\ZfcUserProvider::class,
                 // Available settings goes here
                 'settings' => [
                     'newsletter' => [

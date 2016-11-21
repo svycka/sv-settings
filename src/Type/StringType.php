@@ -8,7 +8,7 @@ use Zend\Validator\StringLength;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class StringType extends AbstractSettingType
+final class StringType extends AbstractSettingType
 {
     /**
      * {@inheritdoc}

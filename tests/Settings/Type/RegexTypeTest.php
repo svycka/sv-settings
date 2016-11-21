@@ -18,6 +18,6 @@ class RegexTypeTest extends \PHPUnit_Framework_TestCase
         $validator = new RegexType($config);
 
         $this->assertTrue($validator->isValid('gooooogle'));
-        $this->assertfalse($validator->isValid('not google'));
+        $this->assertFalse($validator->isValid('not google'));
     }
 }

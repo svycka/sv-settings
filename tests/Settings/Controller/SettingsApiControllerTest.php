@@ -6,13 +6,14 @@ use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Controller\SettingsApiController;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
+use Svycka\Settings\Options\ModuleOptions;
 use TestAssets\CustomCollection;
 use Zend\Http\Header\GenericHeader;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\ServiceManager\Config;
+use Zend\Router\RouteMatch;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\Parameters;
 use Zend\View\Model\JsonModel;
 use ZF\ApiProblem\ApiProblemResponse;
@@ -38,10 +39,12 @@ class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $config = new Config(['invokables' => [
+        $config = ['invokables' => [
             'my-collection' => CustomCollection::class,
-        ]]);
-        $this->manager = new CollectionsManager($config);
+        ]];
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService(\Svycka\Settings\Options\ModuleOptions::class, new ModuleOptions());
+        $this->manager = new CollectionsManager($serviceManager, $config);
         $this->controller = new SettingsApiController($this->manager);
         $this->request = new Request();
         $this->response = new Response();
@@ -64,9 +67,7 @@ class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCanReturnNotFoundCollection()
     {
-        $manager = $this->prophesize(CollectionsManager::class);
-        $manager->has('not-exist')->willReturn(false);
-        $controller = new SettingsApiController($manager->reveal());
+        $controller = new SettingsApiController($this->manager);
         $controller->setEvent($this->event);
         $this->routeMatch->setParam('collection', 'not-exist');
 

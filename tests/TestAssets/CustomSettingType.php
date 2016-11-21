@@ -10,7 +10,6 @@ use Svycka\Settings\Type\SettingTypeInterface;
  */
 class CustomSettingType implements SettingTypeInterface
 {
-
     /**
      * @param array $options
      */

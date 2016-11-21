@@ -3,11 +3,13 @@
 namespace TestAssets;
 
 use Svycka\Settings\Collection\CollectionInterface;
+use Svycka\Settings\Entity\SettingInterface;
 use Svycka\Settings\Provider\NullProvider;
 use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -26,7 +28,7 @@ class CustomCollection implements CollectionInterface
         $this->storage = new MemoryStorage();
         $this->ownerProvider = new NullProvider();
         $this->options = new UserCollectionOptions();
-        $this->typesManager = new TypesManager();
+        $this->typesManager = new TypesManager(new ServiceManager());
     }
 
     public function setValue($name, $value)
