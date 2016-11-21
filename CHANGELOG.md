@@ -2,7 +2,7 @@
 
 All Notable changes to `svycka/sv-settings` will be documented in this file
 
-## NEXT - YYYY-MM-DD
+## 2.0.0 - 2016-11-21
 
 ### Added
 - Updated dependencies to `zendframework/zend-servicemanager:3.1.1`, `zendframework/zend-stdlib:3.1`, `doctrine/doctrine-orm-module:1.1`.
