@@ -1,5 +1,4 @@
 .idea
-
 clover.xml
 composer.lock
 phpunit.xml

@@ -3,15 +3,17 @@
 namespace TestAssets;
 
 use Svycka\Settings\Entity\Setting;
-use Svycka\Settings\Options\CollectionOptions;
+use Svycka\Settings\Options\CollectionOptionsInterface;
 use Svycka\Settings\Provider\NullProvider;
 use Svycka\Settings\Storage\MemoryStorage;
+use Svycka\Settings\Type\InArrayType;
+use Zend\Stdlib\AbstractOptions;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class UserCollectionOptions extends CollectionOptions
+class UserCollectionOptions extends AbstractOptions implements CollectionOptionsInterface
 {
     protected $objectClass   = Setting::class;
     protected $ownerProvider = NullProvider::class;
@@ -20,7 +22,7 @@ class UserCollectionOptions extends CollectionOptions
     protected $settings = [
         'temperature_unit' => [
             'default_value' => 'C',
-            'type'          => 'in_array',
+            'type'          => 'inarray',
             'options'       => [
                 'haystack' => ['C', 'F'],
                 'strict'   => \Zend\Validator\InArray::COMPARE_STRICT,
@@ -29,7 +31,7 @@ class UserCollectionOptions extends CollectionOptions
         'distance_unit'    => [
             // removed optional default value
             //'default_value' => 'km',
-            'type'          => 'in_array',
+            'type'          => InArrayType::class,
             'options'       => [
                 'haystack' => [
                     'km', 'm', 'mi', 'yd',
@@ -45,4 +47,84 @@ class UserCollectionOptions extends CollectionOptions
             ]
         ],
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getObjectClass()
+    {
+        return $this->objectClass;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setObjectClass($class)
+    {
+        $this->objectClass = $class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStorageAdapter()
+    {
+        return $this->storageAdapter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setStorageAdapter($adapter)
+    {
+        $this->storageAdapter = $adapter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerProvider()
+    {
+        return $this->ownerProvider;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOwnerProvider($ownerProvider)
+    {
+        $this->ownerProvider = $ownerProvider;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    }
 }

@@ -10,7 +10,7 @@ use Svycka\Settings\Type\TypesManager;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class TypesManagerFactory
+final class TypesManagerFactory
 {
     public function __invoke(ContainerInterface $container)
     {

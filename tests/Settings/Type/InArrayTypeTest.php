@@ -20,6 +20,6 @@ class InArrayTypeTest extends \PHPUnit_Framework_TestCase
         $validator = new InArrayType($config);
 
         $this->assertTrue($validator->isValid('one'));
-        $this->assertfalse($validator->isValid('three'));
+        $this->assertFalse($validator->isValid('three'));
     }
 }

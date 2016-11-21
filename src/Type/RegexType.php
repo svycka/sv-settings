@@ -8,7 +8,7 @@ use Zend\Validator\Regex;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class RegexType extends AbstractSettingType
+final class RegexType extends AbstractSettingType
 {
     /**
      * {@inheritdoc}

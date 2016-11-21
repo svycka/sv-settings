@@ -10,7 +10,7 @@ use Zend\Stdlib\AbstractOptions;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class CollectionOptions extends AbstractOptions implements CollectionOptionsInterface
+final class CollectionOptions extends AbstractOptions implements CollectionOptionsInterface
 {
     protected $objectClass   = Setting::class;
     protected $ownerProvider = NullProvider::class;

@@ -16,7 +16,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class TypesManager extends AbstractPluginManager
+final class TypesManager extends AbstractPluginManager
 {
     /**
      * @var array
@@ -27,14 +27,6 @@ class TypesManager extends AbstractPluginManager
         IntegerType::class => InvokableFactory::class,
         FloatType::class => InvokableFactory::class,
         StringType::class => InvokableFactory::class,
-
-        // v2 canonical FQCNs
-
-        'svyckasettingstypeinarraytype' => InvokableFactory::class,
-        'svyckasettingstyperegextype' => InvokableFactory::class,
-        'svyckasettingstypeintegertype' => InvokableFactory::class,
-        'svyckasettingstypefloattype' => InvokableFactory::class,
-        'svyckasettingstypestringtype' => InvokableFactory::class,
     ];
 
     /**
@@ -46,11 +38,6 @@ class TypesManager extends AbstractPluginManager
         'integer' => IntegerType::class,
         'float' => FloatType::class,
         'string' => StringType::class,
-
-        /**
-         * @deprecated only for BC reasons, will be removed when possible
-         */
-        'in_array' => 'inarray',
     ];
 
     /**
@@ -80,20 +67,5 @@ class TypesManager extends AbstractPluginManager
             (is_object($type) ? get_class($type) : gettype($type)),
             SettingTypeInterface::class
         ));
-    }
-
-    /**
-     * Validate the plugin
-     *
-     * Checks that the type loaded is instance of SettingTypeInterface.
-     *
-     * @param  SettingTypeInterface $type
-     *
-     * @return void
-     * @throws \RuntimeException if invalid
-     */
-    public function validatePlugin($type)
-    {
-        $this->validate($type);
     }
 }

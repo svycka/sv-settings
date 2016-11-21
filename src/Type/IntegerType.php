@@ -8,7 +8,7 @@ use Zend\I18n\Validator\IsInt;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class IntegerType extends AbstractSettingType
+final class IntegerType extends AbstractSettingType
 {
     /**
      * {@inheritdoc}

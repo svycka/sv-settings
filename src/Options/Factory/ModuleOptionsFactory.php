@@ -9,7 +9,7 @@ use Svycka\Settings\Options\ModuleOptions;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ModuleOptionsFactory
+final class ModuleOptionsFactory
 {
     public function __invoke(ContainerInterface $container)
     {

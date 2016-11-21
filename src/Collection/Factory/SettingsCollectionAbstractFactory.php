@@ -11,16 +11,15 @@ use Svycka\Settings\Options\ModuleOptions;
 use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
-use Zend\ServiceManager\AbstractFactoryInterface;
+use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
+final class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
 {
     /**
      * Can the factory create an instance for the service?
@@ -66,25 +65,5 @@ class SettingsCollectionAbstractFactory implements AbstractFactoryInterface
         $typesManager = $container->get(TypesManager::class);
 
         return new SettingsCollection($config, $storage, $owner_provider, $typesManager);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated will be removed after zf2 support drop
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this->canCreate($serviceLocator->getServiceLocator(), $requestedName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated will be removed after zf2 support drop
-     */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this($serviceLocator->getServiceLocator(), $requestedName);
     }
 }

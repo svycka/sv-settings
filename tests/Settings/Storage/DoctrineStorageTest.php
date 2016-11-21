@@ -56,10 +56,15 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $entityManager->persist($entity)->shouldBeCalled();
         $entityManager->flush($entity)->shouldBeCalled();
+        $repository = $this->prophesize(ObjectRepository::class);
+        $repository->findOneBy([
+            'collection' => $this->collection->getOptions()->getName(),
+            'name'       => 'temperature_unit',
+            'identifier' => 'user1'
+        ])->willReturn(null);
+        $entityManager->getRepository(\Svycka\Settings\Entity\Setting::class)->willReturn($repository->reveal());
 
-        $storage = $this->getMock(DoctrineStorage::class, ['get'], [$entityManager->reveal()]);
-
-        $storage->expects($this->any())->method('get')->willReturn(null);
+        $storage = new DoctrineStorage($entityManager->reveal());
         $storage->set($this->collection, 'user1', 'temperature_unit', 'F');
     }
 
@@ -71,9 +76,15 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
         $entityManager->persist($setting->reveal())->shouldBeCalled();
         $entityManager->flush($setting->reveal())->shouldBeCalled();
 
-        $storage = $this->getMock(DoctrineStorage::class, ['get'], [$entityManager->reveal()]);
-        $storage->expects($this->any())->method('get')->willReturn($setting->reveal());
+        $repository = $this->prophesize(ObjectRepository::class);
+        $repository->findOneBy([
+            'collection' => $this->collection->getOptions()->getName(),
+            'name'       => 'temperature_unit',
+            'identifier' => 'user1'
+        ])->willReturn($setting->reveal());
+        $entityManager->getRepository(\Svycka\Settings\Entity\Setting::class)->willReturn($repository->reveal());
 
+        $storage = new DoctrineStorage($entityManager->reveal());
         $storage->set($this->collection, 'user1', 'temperature_unit', $value);
     }
 

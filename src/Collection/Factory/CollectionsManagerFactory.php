@@ -10,7 +10,7 @@ use Svycka\Settings\Collection\CollectionsManager;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class CollectionsManagerFactory
+final class CollectionsManagerFactory
 {
     public function __invoke(ContainerInterface $container)
     {

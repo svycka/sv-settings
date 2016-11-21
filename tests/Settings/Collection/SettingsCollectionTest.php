@@ -45,7 +45,7 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
         /** @var OwnerProviderInterface $owner_provider */
         $owner_provider = $this->prophesize(OwnerProviderInterface::class)->reveal();
         /** @var TypesManager $types_manager */
-        $types_manager = $this->prophesize(TypesManager::class)->reveal();
+        $types_manager = new TypesManager(new ServiceManager(), []);
 
         new SettingsCollection($options, $adapter, $owner_provider, $types_manager);
     }
@@ -71,10 +71,10 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $name = 'unknown';
 
-        $this->setExpectedException(
-            SettingDoesNotExistException::class,
+        $this->expectExceptionMessage(
             sprintf("Collection '%s' doesn't have '%s' setting.", $this->collection->getOptions()->getName(), $name)
         );
+        $this->expectException(SettingDoesNotExistException::class);
         $this->collection->getValue($name);
     }
 
@@ -82,8 +82,8 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $name = 'unknown';
 
-        $this->setExpectedException(
-            SettingDoesNotExistException::class,
+        $this->expectException(SettingDoesNotExistException::class);
+        $this->expectExceptionMessage(
             sprintf("Collection '%s' doesn't have '%s' setting.", $this->collection->getOptions()->getName(), $name)
         );
         $this->collection->setValue($name, 'value');
@@ -125,7 +125,8 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
             'setting_without_type' => [],
         ]);
 
-        $this->setExpectedException(RuntimeException::class, 'Missing "type" option in setting configuration');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Missing "type" option in setting configuration');
         $this->collection->isValid('setting_without_type', 'value');
     }
 
@@ -137,7 +138,8 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
             ],
         ]);
 
-        $this->setExpectedException(RuntimeException::class, "SettingType 'not_exist' does not exist");
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("SettingType 'not_exist' does not exist");
         $this->collection->isValid('setting_with_non_existing_type', 'value');
     }
 
@@ -147,8 +149,8 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
             'invalid_setting_config' => '',
         ]);
 
-        $this->setExpectedException(
-            RuntimeException::class,
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
             sprintf(
                 "Failed to read 'invalid_setting_config' setting configuration in '%s' collection.",
                 $this->collection->getOptions()->getName()

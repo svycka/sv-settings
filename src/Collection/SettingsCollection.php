@@ -14,7 +14,7 @@ use Svycka\Settings\Type\TypesManager;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsCollection implements CollectionInterface
+final class SettingsCollection implements CollectionInterface
 {
     /**
      * @var StorageAdapterInterface

@@ -24,7 +24,6 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
         $manager = new TypesManager(new ServiceManager());
         $types = [
             'inarray',
-            'in_array',
             InArrayType::class,
             'integer',
             IntegerType::class,
@@ -79,7 +78,7 @@ class TypesManagerTest extends \PHPUnit_Framework_TestCase
         ];
         $manager = new TypesManager(new ServiceManager(), $config);
 
-        $this->setExpectedException(InvalidServiceException::class);
+        $this->expectException(InvalidServiceException::class);
         $manager->get('invalid_type');
     }
 }

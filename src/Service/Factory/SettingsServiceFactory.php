@@ -10,7 +10,7 @@ use Svycka\Settings\Service\SettingsService;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsServiceFactory
+final class SettingsServiceFactory
 {
     public function __invoke(ContainerInterface $container)
     {

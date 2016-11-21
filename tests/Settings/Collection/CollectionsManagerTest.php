@@ -50,7 +50,7 @@ class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
         ];
         $manager = new CollectionsManager(new ServiceManager(), $config);
 
-        $this->setExpectedException(InvalidServiceException::class);
+        $this->expectException(InvalidServiceException::class);
         $manager->get('invalid_collection');
     }
 
@@ -62,7 +62,7 @@ class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
 
         $manager = new CollectionsManager($container->reveal());
 
-        $this->setExpectedException(ServiceNotFoundException::class);
+        $this->expectException(ServiceNotFoundException::class);
         $manager->get('not_exist');
     }
 

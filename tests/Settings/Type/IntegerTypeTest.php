@@ -15,7 +15,7 @@ class IntegerTypeTest extends \PHPUnit_Framework_TestCase
         $validator = new IntegerType();
 
         $this->assertTrue($validator->isValid('100'));
-        $this->assertfalse($validator->isValid('10.1'));
-        $this->assertfalse($validator->isValid('test'));
+        $this->assertFalse($validator->isValid('10.1'));
+        $this->assertFalse($validator->isValid('test'));
     }
 }

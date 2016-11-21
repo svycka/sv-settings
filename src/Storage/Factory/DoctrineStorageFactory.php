@@ -9,7 +9,7 @@ use Svycka\Settings\Storage\DoctrineStorage;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class DoctrineStorageFactory
+final class DoctrineStorageFactory
 {
     /**
      * Create service

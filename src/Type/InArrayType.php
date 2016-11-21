@@ -8,7 +8,7 @@ use Zend\Validator\InArray;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class InArrayType extends AbstractSettingType
+final class InArrayType extends AbstractSettingType
 {
     /**
      * {@inheritdoc}

@@ -16,7 +16,6 @@ return [
             Collection\CollectionsManager::class => Collection\Factory\CollectionsManagerFactory::class,
             Type\TypesManager::class => Type\Factory\TypesManagerFactory::class,
             Storage\DoctrineStorage::class => Storage\Factory\DoctrineStorageFactory::class,
-            Provider\ZfcUserProvider::class => Provider\Factory\ZfcUserProviderFactory::class,
         ],
         'invokables' => [
             Provider\NullProvider::class => Provider\NullProvider::class,

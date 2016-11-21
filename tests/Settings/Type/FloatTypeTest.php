@@ -18,6 +18,6 @@ class FloatTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validator->isValid('10.1'));
         $this->assertTrue($validator->isValid(0.0));
         $this->assertFalse($validator->isValid(''));
-        $this->assertfalse($validator->isValid('test'));
+        $this->assertFalse($validator->isValid('test'));
     }
 }

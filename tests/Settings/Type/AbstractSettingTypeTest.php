@@ -34,10 +34,8 @@ class AbstractSettingTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testWillThrowExceptionIfInvalidOptionsProvided()
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            sprintf('%s::setOptions expects an array', AbstractSettingType::class)
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('%s::setOptions expects an array', AbstractSettingType::class));
 
         $this->type->setOptions(new \stdClass());
     }

@@ -8,7 +8,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class Module implements ConfigProviderInterface
+final class Module implements ConfigProviderInterface
 {
     public function getConfig()
     {
