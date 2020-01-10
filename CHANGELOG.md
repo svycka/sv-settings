@@ -5,7 +5,8 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 ## NEXT - YYYY-MM-DD
 
 ### Added
-- Nothing
+- Added Laminas support
+- Added PHP 7.3 and PHP 7.4 support
 
 ### Deprecated
 - Nothing
@@ -14,7 +15,8 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 - Nothing
 
 ### Removed
-- Nothing
+- [BC Break] Removed Zend Framework support(just renamed to Laminas)
+- Removed PHP 5.6, 7.0 and 7.1 support
 
 ### Security
 - Nothing

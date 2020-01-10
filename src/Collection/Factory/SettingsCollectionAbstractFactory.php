@@ -11,9 +11,9 @@ use Svycka\Settings\Options\ModuleOptions;
 use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
-use Zend\ServiceManager\Factory\AbstractFactoryInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

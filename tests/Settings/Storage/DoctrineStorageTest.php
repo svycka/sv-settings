@@ -15,7 +15,7 @@ use TestAssets\CustomCollection;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
+class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
 {
     /** @var CollectionInterface */
     private $collection;

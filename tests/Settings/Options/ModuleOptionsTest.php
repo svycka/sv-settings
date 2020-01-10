@@ -8,7 +8,7 @@ use Svycka\Settings\Options\ModuleOptions;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsTest extends \PHPUnit\Framework\TestCase
 {
     /** @var ModuleOptions */
     private $options;

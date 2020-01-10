@@ -8,7 +8,7 @@ use Svycka\Settings\Type\RegexType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class RegexTypeTest extends \PHPUnit_Framework_TestCase
+class RegexTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanValidate()
     {

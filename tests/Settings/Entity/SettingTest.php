@@ -8,7 +8,7 @@ use Svycka\Settings\Entity\Setting;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingTest extends \PHPUnit_Framework_TestCase
+class SettingTest extends \PHPUnit\Framework\TestCase
 {
     /** @var Setting */
     private $setting;

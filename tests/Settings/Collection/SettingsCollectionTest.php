@@ -13,13 +13,13 @@ use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\UserCollectionOptions;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
+class SettingsCollectionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CollectionInterface
@@ -48,6 +48,8 @@ class SettingsCollectionTest extends \PHPUnit_Framework_TestCase
         $types_manager = new TypesManager(new ServiceManager(), []);
 
         new SettingsCollection($options, $adapter, $owner_provider, $types_manager);
+
+        $this->expectNotToPerformAssertions();
     }
 
     public function testCanGetSetValue()

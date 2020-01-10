@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Type;
 
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

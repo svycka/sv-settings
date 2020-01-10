@@ -10,7 +10,7 @@ use TestAssets\CustomAbstractSettingType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class AbstractSettingTypeTest extends \PHPUnit_Framework_TestCase
+class AbstractSettingTypeTest extends \PHPUnit\Framework\TestCase
 {
     /** @var CustomAbstractSettingType */
     private $type;

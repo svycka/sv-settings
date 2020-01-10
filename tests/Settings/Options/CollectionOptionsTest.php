@@ -11,7 +11,7 @@ use Svycka\Settings\Storage\MemoryStorage;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class CollectionOptionsTest extends \PHPUnit_Framework_TestCase
+class CollectionOptionsTest extends \PHPUnit\Framework\TestCase
 {
     /** @var CollectionOptions */
     private $options;

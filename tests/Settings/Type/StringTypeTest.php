@@ -8,7 +8,7 @@ use Svycka\Settings\Type\StringType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class StringTypeTest extends \PHPUnit_Framework_TestCase
+class StringTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanValidate()
     {

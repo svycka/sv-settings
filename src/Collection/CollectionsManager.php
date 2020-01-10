@@ -4,7 +4,7 @@ namespace Svycka\Settings\Collection;
 
 use Interop\Container\ContainerInterface;
 use Svycka\Settings\Collection\Factory\SettingsCollectionAbstractFactory;
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Class CollectionsManager

@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Type;
 
-use Zend\I18n\Validator\IsInt;
+use Laminas\I18n\Validator\IsInt;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

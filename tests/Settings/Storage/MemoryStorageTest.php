@@ -10,7 +10,7 @@ use TestAssets\CustomCollection;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class MemoryStorageTest extends \PHPUnit_Framework_TestCase
+class MemoryStorageTest extends \PHPUnit\Framework\TestCase
 {
     /** @var CollectionInterface */
     private $collection;
