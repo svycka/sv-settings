@@ -11,7 +11,7 @@ use Svycka\Settings\Options\ModuleOptions;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class CollectionsManagerFactoryTest extends \PHPUnit_Framework_TestCase
+class CollectionsManagerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanCreate()
     {

@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Type;
 
-use Zend\Validator\Regex;
+use Laminas\Validator\Regex;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

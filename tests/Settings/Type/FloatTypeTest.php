@@ -8,7 +8,7 @@ use Svycka\Settings\Type\FloatType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class FloatTypeTest extends \PHPUnit_Framework_TestCase
+class FloatTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanValidate()
     {

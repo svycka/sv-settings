@@ -7,7 +7,7 @@ use Svycka\Settings\Options\CollectionOptionsInterface;
 use Svycka\Settings\Provider\NullProvider;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\InArrayType;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
@@ -25,7 +25,7 @@ class UserCollectionOptions extends AbstractOptions implements CollectionOptions
             'type'          => 'inarray',
             'options'       => [
                 'haystack' => ['C', 'F'],
-                'strict'   => \Zend\Validator\InArray::COMPARE_STRICT,
+                'strict'   => \Laminas\Validator\InArray::COMPARE_STRICT,
             ]
         ],
         'distance_unit'    => [
@@ -36,7 +36,7 @@ class UserCollectionOptions extends AbstractOptions implements CollectionOptions
                 'haystack' => [
                     'km', 'm', 'mi', 'yd',
                 ],
-                'strict'   => \Zend\Validator\InArray::COMPARE_STRICT,
+                'strict'   => \Laminas\Validator\InArray::COMPARE_STRICT,
             ]
         ],
         'locale'           => [

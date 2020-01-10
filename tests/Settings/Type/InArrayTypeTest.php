@@ -8,7 +8,7 @@ use Svycka\Settings\Type\InArrayType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class InArrayTypeTest extends \PHPUnit_Framework_TestCase
+class InArrayTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanValidate()
     {

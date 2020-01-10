@@ -8,21 +8,21 @@ use Svycka\Settings\Controller\SettingsApiController;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
 use Svycka\Settings\Options\ModuleOptions;
 use TestAssets\CustomCollection;
-use Zend\Http\Header\GenericHeader;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteMatch;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\Parameters;
-use Zend\View\Model\JsonModel;
-use ZF\ApiProblem\ApiProblemResponse;
+use Laminas\Http\Header\GenericHeader;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Router\RouteMatch;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\JsonModel;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
 
 /**
  * @author  Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsApiControllerFactoryTest extends \PHPUnit_Framework_TestCase
+class SettingsApiControllerFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /** @var SettingsApiController */
     private $controller;

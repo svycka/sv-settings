@@ -5,12 +5,12 @@ namespace Svycka\Settings\Controller;
 use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Exception\SettingDoesNotExistException;
-use Zend\Mvc\Controller\AbstractRestfulController;
-use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\ArrayUtils;
-use Zend\View\Model\JsonModel;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
+use Laminas\Mvc\Controller\AbstractRestfulController;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\View\Model\JsonModel;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

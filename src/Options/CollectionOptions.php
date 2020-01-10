@@ -4,7 +4,7 @@ namespace Svycka\Settings\Options;
 
 use Svycka\Settings\Entity\Setting;
 use Svycka\Settings\Provider\NullProvider;
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

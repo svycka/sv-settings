@@ -9,7 +9,7 @@ use Svycka\Settings\Provider\OwnerProviderInterface;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Storage\StorageAdapterInterface;
 use Svycka\Settings\Type\TypesManager;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

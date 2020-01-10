@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings;
 
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

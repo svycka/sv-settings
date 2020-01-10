@@ -4,13 +4,13 @@ namespace Svycka\SettingsTest\Options\Factory;
 
 use Svycka\Settings\Options\Factory\ModuleOptionsFactory;
 use Svycka\Settings\Options\ModuleOptions;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanCreate()
     {

@@ -9,15 +9,15 @@ use Svycka\Settings\Type\RegexType;
 use Svycka\Settings\Type\StringType;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\CustomSettingType;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class TypesManagerTest extends \PHPUnit_Framework_TestCase
+class TypesManagerTest extends \PHPUnit\Framework\TestCase
 {
     public function testHasDefaultTypes()
     {

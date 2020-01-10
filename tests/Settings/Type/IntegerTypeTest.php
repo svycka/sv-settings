@@ -8,7 +8,7 @@ use Svycka\Settings\Type\IntegerType;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class IntegerTypeTest extends \PHPUnit_Framework_TestCase
+class IntegerTypeTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanValidate()
     {

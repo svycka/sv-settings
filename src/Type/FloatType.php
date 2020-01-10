@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Type;
 
-use Zend\I18n\Validator\IsFloat;
+use Laminas\I18n\Validator\IsFloat;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

@@ -10,16 +10,16 @@ use Svycka\Settings\Provider\NullProvider;
 use Svycka\Settings\Storage\MemoryStorage;
 use Svycka\Settings\Type\TypesManager;
 use TestAssets\CustomCollection;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class CollectionsManagerTest extends \PHPUnit_Framework_TestCase
+class CollectionsManagerTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanAddCustomType()
     {

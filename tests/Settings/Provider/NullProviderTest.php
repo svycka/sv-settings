@@ -8,7 +8,7 @@ use Svycka\Settings\Provider\NullProvider;
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class NullProviderTest extends \PHPUnit_Framework_TestCase
+class NullProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanGetIdentifier()
     {

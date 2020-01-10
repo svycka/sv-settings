@@ -5,13 +5,13 @@ namespace Svycka\SettingsTest\Storage\Factory;
 use Doctrine\ORM\EntityManagerInterface;
 use Svycka\Settings\Storage\DoctrineStorage;
 use Svycka\Settings\Storage\Factory\DoctrineStorageFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class DoctrineStorageFactoryTest extends \PHPUnit_Framework_TestCase
+class DoctrineStorageFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanCreate()
     {

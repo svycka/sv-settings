@@ -6,14 +6,14 @@ use Svycka\Settings\Collection\CollectionInterface;
 use Svycka\Settings\Collection\CollectionsManager;
 use Svycka\Settings\Service\SettingsService;
 use TestAssets\CustomCollection;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
  * @license MIT
  */
-class SettingsServiceTest extends \PHPUnit_Framework_TestCase
+class SettingsServiceTest extends \PHPUnit\Framework\TestCase
 {
     /** @var SettingsService */
     private $service;

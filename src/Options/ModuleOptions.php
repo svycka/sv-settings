@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Options;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>

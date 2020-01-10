@@ -2,7 +2,7 @@
 
 namespace Svycka\Settings\Type;
 
-use Zend\Validator\InArray;
+use Laminas\Validator\InArray;
 
 /**
  * @author Vytautas Stankus <svycka@gmail.com>
