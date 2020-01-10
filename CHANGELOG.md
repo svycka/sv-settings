@@ -2,7 +2,7 @@
 
 All Notable changes to `svycka/sv-settings` will be documented in this file
 
-## NEXT - YYYY-MM-DD
+## 3.0.0 - 2020-01-10
 
 ### Added
 - Added Laminas support
