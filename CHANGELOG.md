@@ -11,7 +11,7 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 - Nothing
 
 ### Fixed
-- Nothing
+- Move PHPUnit to dev dependencies
 
 ### Removed
 - Nothing
