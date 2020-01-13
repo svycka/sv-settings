@@ -5,6 +5,40 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 ## NEXT - YYYY-MM-DD
 
 ### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
+## 3.0.1 - 2020-01-13
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Move PHPUnit to dev dependencies
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
+## 3.0.0 - 2020-01-10
+
+### Added
 - Added Laminas support
 - Added PHP 7.3 and PHP 7.4 support
 
