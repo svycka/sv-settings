@@ -55,7 +55,7 @@ class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
         );
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $entityManager->persist($entity)->shouldBeCalled();
-        $entityManager->flush($entity)->shouldBeCalled();
+        $entityManager->flush()->shouldBeCalled();
         $repository = $this->prophesize(ObjectRepository::class);
         $repository->findOneBy([
             'collection' => $this->collection->getOptions()->getName(),
@@ -74,7 +74,7 @@ class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
         $setting->setValue($value = 'F')->shouldBeCalled();
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $entityManager->persist($setting->reveal())->shouldBeCalled();
-        $entityManager->flush($setting->reveal())->shouldBeCalled();
+        $entityManager->flush()->shouldBeCalled();
 
         $repository = $this->prophesize(ObjectRepository::class);
         $repository->findOneBy([

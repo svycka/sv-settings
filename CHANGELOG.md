@@ -11,7 +11,7 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 - Nothing
 
 ### Fixed
-- Nothing
+- [BC Break] Will call flush() on Doctrine entityManager without specific entity because it is deprecated
 
 ### Removed
 - Nothing
