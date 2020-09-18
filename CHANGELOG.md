@@ -2,7 +2,7 @@
 
 All Notable changes to `svycka/sv-settings` will be documented in this file
 
-## NEXT - YYYY-MM-DD
+## 4.0.0 - 2020-09-18
 
 ### Added
 - Nothing
@@ -11,7 +11,7 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 - Nothing
 
 ### Fixed
-- [BC Break] Will call flush() on Doctrine entityManager without specific entity because it is deprecated
+- [BC Break] Will call flush() on Doctrine entityManager without specific entity because it is deprecated.
 
 ### Removed
 - Nothing
