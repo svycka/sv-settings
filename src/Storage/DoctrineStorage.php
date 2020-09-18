@@ -64,7 +64,7 @@ final class DoctrineStorage implements StorageAdapterInterface
         $setting->setValue($value);
 
         $this->entityManager->persist($setting);
-        $this->entityManager->flush($setting);
+        $this->entityManager->flush();
     }
 
     /**
