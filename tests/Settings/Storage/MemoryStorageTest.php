@@ -15,7 +15,7 @@ class MemoryStorageTest extends \PHPUnit\Framework\TestCase
     /** @var CollectionInterface */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = new CustomCollection();
     }

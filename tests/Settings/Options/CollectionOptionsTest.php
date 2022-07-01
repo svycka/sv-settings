@@ -16,7 +16,7 @@ class CollectionOptionsTest extends \PHPUnit\Framework\TestCase
     /** @var CollectionOptions */
     private $options;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->options = new CollectionOptions();
     }

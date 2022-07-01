@@ -5,7 +5,7 @@ All Notable changes to `svycka/sv-settings` will be documented in this file
 ## NEXT - YYYY-MM-DD
 
 ### Added
-- Nothing
+- Added PHP 8 support and migrated to github actions
 
 ### Deprecated
 - Nothing

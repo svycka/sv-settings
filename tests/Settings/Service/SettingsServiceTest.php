@@ -18,7 +18,7 @@ class SettingsServiceTest extends \PHPUnit\Framework\TestCase
     /** @var SettingsService */
     private $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         $config = ['invokables' => [
             'my_collection' => CustomCollection::class,

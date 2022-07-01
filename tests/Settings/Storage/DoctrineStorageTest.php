@@ -2,7 +2,7 @@
 
 namespace Svycka\SettingsTest\Storage;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Prophecy\Argument\Token\CallbackToken;
 use Svycka\Settings\Collection\CollectionInterface;
@@ -20,7 +20,7 @@ class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
     /** @var CollectionInterface */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = new CustomCollection();
     }
@@ -35,7 +35,7 @@ class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
         ])->willReturn($setting = new Setting())->shouldBeCalled();
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $entityManager->getRepository($this->collection->getOptions()->getObjectClass())
-            ->willReturn($repository);
+            ->willReturn($repository->reveal());
 
         $storage = new DoctrineStorage($entityManager->reveal());
         $this->assertSame($setting, $storage->get($this->collection, $identifier, $name));
@@ -97,7 +97,7 @@ class DoctrineStorageTest extends \PHPUnit\Framework\TestCase
         ])->willReturn($list = [123])->shouldBeCalled();
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $entityManager->getRepository($this->collection->getOptions()->getObjectClass())
-            ->willReturn($repository);
+            ->willReturn($repository->reveal());
 
         $storage = new DoctrineStorage($entityManager->reveal());
         $this->assertSame($list, $storage->getList($this->collection, 'user1'));

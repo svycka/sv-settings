@@ -13,7 +13,7 @@ class ModuleOptionsTest extends \PHPUnit\Framework\TestCase
     /** @var ModuleOptions */
     private $options;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->options = new ModuleOptions();
     }
