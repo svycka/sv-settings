@@ -2,7 +2,7 @@
 
 All Notable changes to `svycka/sv-settings` will be documented in this file
 
-## NEXT - YYYY-MM-DD
+## 4.1.0 - 2022-07-01
 
 ### Added
 - Added PHP 8 support and migrated to github actions
