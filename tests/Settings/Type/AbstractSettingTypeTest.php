@@ -15,7 +15,7 @@ class AbstractSettingTypeTest extends \PHPUnit\Framework\TestCase
     /** @var CustomAbstractSettingType */
     private $type;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->type = new CustomAbstractSettingType;
     }

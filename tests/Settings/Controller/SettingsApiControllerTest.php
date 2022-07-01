@@ -37,7 +37,7 @@ class SettingsApiControllerFactoryTest extends \PHPUnit\Framework\TestCase
     /** @var MvcEvent */
     private $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $config = ['invokables' => [
             'my-collection' => CustomCollection::class,

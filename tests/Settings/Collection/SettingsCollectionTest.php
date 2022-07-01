@@ -26,7 +26,7 @@ class SettingsCollectionTest extends \PHPUnit\Framework\TestCase
      */
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = new SettingsCollection(
             new UserCollectionOptions(),

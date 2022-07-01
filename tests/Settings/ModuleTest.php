@@ -9,6 +9,6 @@ class ModuleTest extends \PHPUnit\Framework\TestCase
     public function testConfigIsArray()
     {
         $module = new Module();
-        $this->assertInternalType('array', $module->getConfig());
+        $this->assertIsArray($module->getConfig());
     }
 }
