@@ -2,6 +2,23 @@
 
 All Notable changes to `svycka/sv-settings` will be documented in this file
 
+## NEXT - YYYY-MM-DD
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+- 
 ## 4.1.0 - 2022-07-01
 
 ### Added
